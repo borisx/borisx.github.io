@@ -173,7 +173,7 @@
         let totalTime = time[1] - time[0];
         let duration = currentDate - time[0];
         let targetBattlepass = Math.floor(battlepass*(duration/totalTime));
-        let targetBattlepassLv = Math.floor(targetBattlepass/50);
+        let targetBattlepassLv = Math.ceil(targetBattlepass/50);
         let input = parseFloat(document.querySelector('#currentBattlepass').value)
         let currentBattlepass;
         if (isNaN(input) || input == 0) {
