@@ -88,7 +88,7 @@
         <div>
             <h3>Select your server:</h3>
             <select name="server" id="server">
-                <option value="ANZ">ANZ server</option>
+                <option value="ASIA">ASIA server</option>
                 <option value="EU">EU server</option>
                 <option value="US">US server</option>
                 <option value="RU">RU server</option>
@@ -112,39 +112,41 @@
         </div>
     </div>
 <script>
-    var anz = [new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/16 03:00:00  UTC+8')];
-    var us = [new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/15 12:00:00  UTC-8')];
-    var eu = [new Date('2021/03/15 04:00:00 UTC+1'),new Date('2021/06/15 21:00:00  UTC+2')];
-    var ru = [new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/15 22:00:00  UTC+3')];
-    var battlepass = 7500;
-    var currentDate = new Date();
-    
-    var loop = ()=>{
-        var server = document.querySelector('#server').value;
-        if(server == 'ANZ'){
-            var time = anz;
+    const asia = [new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/16 03:00:00  UTC+8')];
+    const us = [new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/15 12:00:00  UTC-8')];
+    const eu = [new Date('2021/03/15 04:00:00 UTC+1'),new Date('2021/06/15 21:00:00  UTC+2')];
+    const ru = [new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/15 22:00:00  UTC+3')];
+    const battlepass = 7500;
+    var server = 'ASIA';
+    var time = asia;
+    document.querySelector('#server').onchange = function(){
+        server = document.querySelector('#server').value;
+        if(server == 'ASIA'){
+            time = asia;
         }else if(server == 'EU'){
-            var time = eu;
+            time = eu;
         }else if(server == 'US'){
-            var time = us;
+            time = us;
         }else if(server == 'RU'){
-            var time = ru;
+            time = ru;
         };
-        var totalTime = time[1] - time[0];
-        var duration = currentDate - time[0];
-        var targetBattlepass = Math.floor(battlepass*(duration/totalTime));
-        var targetBattlepassLv = Math.floor(targetBattlepass/50);
-        currentDate = new Date();
         document.querySelector('.info').children[0].innerHTML = 'Start:2021-'+(time[0].getMonth()+1)+'-'+time[0].getDate()+' '+time[0].getHours()+':00 UTC+'+(time[0].getTimezoneOffset()/-60);
         document.querySelector('.info').children[1].innerHTML = 'End:2021-'+(time[1].getMonth()+1)+'-'+time[1].getDate()+' '+time[1].getHours()+':00 UTC+'+(time[1].getTimezoneOffset()/-60);
+    };
+    var update = ()=>{
+        let currentDate = new Date();
+        let totalTime = time[1] - time[0];
+        let duration = currentDate - time[0];
+        let targetBattlepass = Math.floor(battlepass*(duration/totalTime));
+        let targetBattlepassLv = Math.floor(targetBattlepass/50);
         document.querySelector('.bar').style.width = (duration/totalTime)*100+'%';
         document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
         document.querySelector('.target-battlepass-point').children[1].innerHTML = targetBattlepass;
         document.querySelector('.target-battlepass-lv').children[1].innerHTML = targetBattlepassLv;
         setTimeout(() => {
-            loop();
+            update();
         }, 1000);
     }
-    loop();
+    update();
 </script>
 </body></html>
