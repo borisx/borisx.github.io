@@ -136,7 +136,7 @@
         </div>
         <div class="target target-current-battlepass">
             <h2>enter your current progression</h2>
-            <input name="currentBattlepass" id="currentBattlepass" type="number" value="0"></input>
+            <input name="currentBattlepass" id="currentBattlepass" type="number" value=""></input>
         </div>
         <div class="target target-daily-average">
             <h2>Daily average progression</h2>
@@ -176,7 +176,7 @@
         let targetBattlepassLv = Math.floor(targetBattlepass/50);
         let input = parseFloat(document.querySelector('#currentBattlepass').value)
         let currentBattlepass;
-        if (isNaN(input) || input == 0) { 
+        if (isNaN(input) || input == 0) {
             currentBattlepass = targetBattlepass;
         }else{
             currentBattlepass = document.querySelector('#currentBattlepass').value;
