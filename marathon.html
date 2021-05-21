@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://yasakacorp.com/tank.htm -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kampfpanzer 07 RH Marathon Calculator</title>
+<style>
+    body{
+        background-color: #1C1B16;
+        background-image: url(https://sg-wotp.wgcdn.co/static/5.84.0_19f5c5/wotp_static/img/core/frontend/scss/common/blocks/sparkles/img/sparkles.png);
+        color: #fff;
+        font-family: bebas neue;
+    }
+    .logo{
+        position: fixed;
+        left: calc(50% - 154.5px);
+        top: 5%;
+    }
+    .container{
+        position: fixed;
+        top: calc(5% + 136px);
+        width: 100%;
+        text-align: center;
+    }
+    .progress-bar{
+        position: relative;
+        width: 80%;
+        margin-left: 10%;
+        height: 10px;
+        padding: 2px;
+        background: #000;
+    }
+    .target-discount{
+        position: relative;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+        padding: 2px;
+    }
+    .target-discount #targetDiscount{
+        width: 100%;
+    }
+    .progress-bar .seperator{
+        position: absolute;
+        content: '';
+        box-sizing: border-box;
+        border-left: 1px rgba(100,100,100,0.8) solid;
+        height: 25px;
+        top: -5px;
+        width: 1px;
+    }
+    .progress-bar .seperator p{
+        position: absolute;
+        font-size: 4px;
+        top: 20px;
+    }
+    .progress-bar :nth-child(11){
+        right: 0px;
+    }
+    .progress-bar :nth-child(11) p{
+        top: 0px;
+        left: -20px;
+        font-size: 30px;
+    }
+    .bar{
+        position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
+    }
+    .info{
+        color: #deb887;
+        margin: 10px;
+    }
+    .info h2{
+        margin: 0px;
+    }
+    .target{
+        width: 50%;
+        float: left;
+    }
+    .target h2{
+        font-size: 20px;
+        margin: 0px;
+    }
+    .target h1{
+        color: #deb887;
+        font-size: 64px;
+        margin: 0px;
+    }
+    .target-daily-average h1{
+        color: aquamarine;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+    .target-current-battlepass input{
+        color: aquamarine;
+        font-family: bebas neue;
+        font-size: 64px;
+        width: 40%;
+        min-width: 200px;
+        text-align: center;
+        background: none;
+        border:3px solid rgb(85, 85, 85);
+        border-radius: 10px;
+    }
+    .credit{
+        position:fixed;
+        bottom: 3%; 
+        width: 100%;
+        font-size: 64px;
+        margin: 0px;
+    }
+    .credit a{
+        text-decoration: none;
+        font-size: 18px;
+        text-align: center;
+        color: #8b8b8b;
+    }
+</style></head>
+
+<body>
+    <img class="logo" src="https://content-wg.gcdn.co/locdoc/rich-article/bp_2021/img/logo.35943a.png" alt="">
+    <div class="container">
+        <h1>Kampfpanzer 07 RH Marathon Calculator</h1>
+        <div class="progress-bar">
+            <div class="bar""></div>
+            <div class="seperator"><p>-10%</p></div>
+            <div class="seperator"><p>-20%</p></div>
+            <div class="seperator"><p>-30%</p></div>
+            <div class="seperator"><p>-40%</p></div>
+            <div class="seperator"><p>-50%</p></div>
+            <div class="seperator"><p>-60%</p></div>
+            <div class="seperator"><p>-70%</p></div>
+            <div class="seperator"><p>-80%</p></div>
+            <div class="seperator"><p>-90%</p></div>
+            <div class="seperator"><p>-100%</p></div>
+        </div>
+        <div class="target-discount">
+            <h3>Move slider to choose your target level:</h3>
+            <input type="range" id="targetDiscount" min="1" max="10" value="5" class="slider" id="myRange">
+        </div>
+        <div>
+            <h3>Select your server:</h3>
+            <select name="server" id="server">
+                <option value="ASIA">ASIA server</option>
+                <option value="EU">EU server</option>
+                <option value="US">US server</option>
+                <option value="RU">RU server</option>
+            </select>
+        </div>
+        <div class="info">
+            <h2>Start：</h2>
+            <h2>End：</h2>
+        </div>
+        <h3 class="date">current time</h3>
+        <div class="target target-exp">
+            <h2>target Experience</h2>
+            <h1>2772</h1>
+        </div>
+        <div class="target target-lv">
+            <h2>target level</h2>
+            <h1>1</h1>
+        </div>
+        <div class="credit">
+            <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
+        </div>
+    </div>
+<script>
+    const asia = [new Date('2021/05/21 09:00:00 UTC+8'),new Date('2021/05/31 09:00:00  UTC+8')];
+    const us = [new Date('2021/05/21 07:00:00 UTC-8'),new Date('2021/05/31 07:00:00  UTC-8')];
+    const eu = [new Date('2021/05/21 10:00:00 UTC+1'),new Date('2021/05/31 10:00:00  UTC+2')];
+    const ru = [new Date('2021/05/21 09:00:00 UTC+3'),new Date('2021/05/31 09:00:00  UTC+3')];
+    const exp = [3000,5000,9000,16000,28000,30000,33000,36000,40000,50000]
+    const accum = [3000,8000,17000,33000,61000,91000,124000,160000,200000,250000]
+    const sum = 250000
+    var server = 'ASIA';
+    var time = asia;
+    var targetDiscount = 5;
+    document.querySelector('#server').onchange = function(){
+        server = document.querySelector('#server').value;
+        if(server == 'ASIA'){
+            time = asia;
+        }else if(server == 'EU'){
+            time = eu;
+        }else if(server == 'US'){
+            time = us;
+        }else if(server == 'RU'){
+            time = ru;
+        };
+    };
+    var update = ()=>{
+        document.querySelector('.info').children[0].innerHTML = 'Start:2021-'+(time[0].getMonth()+1)+'-'+time[0].getDate()+' '+time[0].getHours()+':00 UTC+'+(time[0].getTimezoneOffset()/-60);
+        document.querySelector('.info').children[1].innerHTML = 'End:2021-'+(time[1].getMonth()+1)+'-'+time[1].getDate()+' '+time[1].getHours()+':00 UTC+'+(time[1].getTimezoneOffset()/-60);
+        let currentDate = new Date();
+        let totalTime = time[1] - time[0];
+        let duration = currentDate - time[0];
+        let targetSum = accum[targetDiscount-1];
+        let targetExp = Math.floor(targetSum*(duration/totalTime));
+        let targetLv = 0;
+        targetDiscount = document.querySelector('#targetDiscount').value
+        document.querySelector('.bar').style.width = (duration/totalTime)*100+'%';
+        document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
+        document.querySelector('.target-exp').children[1].innerHTML = Number(targetExp).toLocaleString();
+        document.querySelector('.progress-bar').children[10].children[0].innerHTML = targetDiscount*-10+'%';
+        for(var i=1;i<10;i++){
+            document.querySelector('.progress-bar').children[i].style.display = 'none';
+            if(i<targetDiscount){
+                document.querySelector('.progress-bar').children[i].style.left = accum[i-1]/targetSum*100+'%';
+                document.querySelector('.progress-bar').children[i].style.display = 'block';
+            }
+            if(targetExp > accum[i-1]){
+                console.log(targetExp,accum[i-1]);
+                targetLv += 1;
+                document.querySelector('.target-lv').children[1].innerHTML = targetLv;
+            }
+        }
+        setTimeout(() => {
+            update();
+        }, 10);
+    }
+    document.ready = update();
+</script>
+</body></html>
