@@ -163,7 +163,7 @@
         </div>
         <h3 class="date">current time</h3>
         <div class="target target-exp">
-            <h2>You should have:</h2>
+            <h2>You should be at:</h2>
             <h1>2772</h1>
         </div>
         <div class="target daily-average">
@@ -204,21 +204,31 @@
         let totalTime = time[1] - time[0];
         let duration = currentDate - time[0];
         let targetSum = accum[targetDiscount-1];
-        let targetExp = Math.floor(targetSum*(duration/totalTime));
+        let targetExp = Math.ceil(targetSum*(duration/totalTime));
         let dailyExp = Math.ceil(totalTime-duration/60/60/24);
-        let targetLv = 0;
+        let targetLv = 1;
         targetDiscount = document.querySelector('#targetDiscount').value
         document.querySelector('.bar').style.width = (duration/totalTime)*100+'%';
         document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
-        document.querySelector('.target-exp').children[1].innerHTML = Number(targetExp).toLocaleString();
         document.querySelector('.progress-bar').children[10].children[0].innerHTML = targetDiscount*-10+'%';
         let totalDay = totalTime/1000/60/60/24;
         document.querySelector('.daily-average').children[1].innerHTML = Number(accum[targetDiscount-1]/totalDay).toLocaleString();
+        let stageExp = 0;
         for(var i=1;i<10;i++){
             document.querySelector('.progress-bar').children[i].style.display = 'none';
             if(i<targetDiscount){
                 document.querySelector('.progress-bar').children[i].style.left = accum[i-1]/targetSum*100+'%';
                 document.querySelector('.progress-bar').children[i].style.display = 'block';
+            }
+            if(targetExp<accum[0]){
+                stageExp = targetExp
+            }
+            if(targetExp>=accum[i-1]){
+                targetLv += 1
+                stageExp = targetExp - accum[i-1];
+            }
+            if(targetExp<accum[i-1]){
+                document.querySelector('.target-exp').children[1].innerHTML ='Stage '+targetLv+' - '+Number(stageExp).toLocaleString();
             }
         }
         setTimeout(() => {
