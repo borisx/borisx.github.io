@@ -176,7 +176,7 @@
         </div>
         <div class="slider-container">
             <h3>Move slider to match your current progress</h3>
-            <input type="range" id="currentExpSlider" min="0" max="25000" value="0" class="slider" id="myRange">
+            <input type="range" id="currentExpSlider" min="0" max="1250" value="0" class="slider" id="myRange">
         </div>
         <div class="target current-exp-num">
             <h2>You are at:</h2>
@@ -231,39 +231,50 @@
         document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
         document.querySelector('.progress-bar').children[10].children[0].innerHTML = targetDiscount*-10+'%';
         let stageExp = 0;
-        for(var i=1;i<=10;i++){
+        var stageCalc = (input)=>{
+            let stage;
+            let stageExp;
+            for(var i=0;i<expSum.length;i++){
+                if(input - expSum[i] > 0){
+                    i++
+                }
+                if(input - expSum[i] < 0 && i>0){
+                    stageExp = input - expSum[i-1]
+                    stage = i+1
+                    return([stage,stageExp])
+                }
+                if(input - expSum[i] < 0 && i==0){
+                    stageExp = input
+                    stage = 1
+                    return([stage,stageExp])
+                }
+                if(input - expSum[i] == 0){
+                    stageExp = input
+                    stage = i+1
+                    return([stage,stageExp])
+                }
+            }
+        }
+        for(var i=1;i<10;i++){
             document.querySelector('.progress-bar').children[i].style.display = 'none';
             if(i<targetDiscount){
                 document.querySelector('.progress-bar').children[i].style.left = expSum[i-1]/targetSum*100+'%';
                 document.querySelector('.progress-bar').children[i].style.display = 'block';
             }
-            if(targetExp<expSum[0]){
-                stageExp = targetExp
-            }
-            if(targetExp>=expSum[i-1]){
-                targetLv += 1
-                stageExp = targetExp - expSum[i-1];
-            }
-            if(targetExp<expSum[i-1]){
-                document.querySelector('.target-exp').children[1].innerHTML ='Stage '+targetLv+' - '+Number(stageExp).toLocaleString();
-            }
         }
+        document.querySelector('.target-exp').children[1].innerHTML ='Stage '+stageCalc(targetExp)[0]+' - '+Number(stageCalc(targetExp)[1]).toLocaleString();
+        //calculate and update current exp
         let currentLv = 1;
-        let currentExp = document.querySelector('#currentExpSlider').value *10
-        for(var i=1;i<=10;i++){
-            if(currentExp<expSum[0]){
-                currentStageExp = currentExp
-            }
-            if(currentExp>=expSum[i-1]){
-                currentLv += 1
-                currentStageExp = currentExp - expSum[i-1];
-            }
-            if(currentExp<expSum[i-1]){
-                document.querySelector('.current-exp-num').children[1].innerHTML ='Stage '+currentLv+' - '+Number(currentStageExp).toLocaleString();
-            }
-        }
+        let currentExp = document.querySelector('#currentExpSlider').value *200
+        document.querySelector('.current-exp-num').children[1].innerHTML ='Stage '+stageCalc(currentExp)[0]+' - '+Number(stageCalc(currentExp)[1]).toLocaleString()
+        //calculate and update daily exp
         let dailyExp = Math.ceil((targetSum-currentExp)/((totalTime-duration)/1000/60/60/24))
-        document.querySelector('.daily-average').children[1].innerHTML = Number(dailyExp).toLocaleString();
+        if(dailyExp<=0){
+            document.querySelector('.daily-average').children[1].innerHTML = 0;
+        }
+        if(dailyExp>0){
+            document.querySelector('.daily-average').children[1].innerHTML = Number(dailyExp).toLocaleString();
+        }
         setTimeout(() => {
             update();
         }, 10);
