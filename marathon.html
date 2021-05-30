@@ -231,7 +231,7 @@
         document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
         document.querySelector('.progress-bar').children[10].children[0].innerHTML = targetDiscount*-10+'%';
         let stageExp = 0;
-        for(var i=1;i<10;i++){
+        for(var i=1;i<=10;i++){
             document.querySelector('.progress-bar').children[i].style.display = 'none';
             if(i<targetDiscount){
                 document.querySelector('.progress-bar').children[i].style.left = expSum[i-1]/targetSum*100+'%';
