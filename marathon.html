@@ -289,7 +289,12 @@
             let targetDiscount = this.controller.targetDiscountSlider.value
             let targetSum = this.expSum[targetDiscount-1]
             let targetExp = Math.ceil(targetSum*timer.timeProgress())
-            this.display.targetExp.innerHTML ='Stage '+this.stageCalc(targetExp)[0]+' - '+this.stageCalc(targetExp)[1]
+            if(targetExp <= this.expSum[9]){
+                this.display.targetExp.innerHTML ='Stage '+this.stageCalc(targetExp)[0]+' - '+this.stageCalc(targetExp)[1]
+            }
+            if(targetExp > this.expSum[9]){
+                this.display.targetExp.innerHTML ='Stage 10 - 250,000'
+            }
             //update progress bar
             this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%'
             this.display.progressBar.children[10].children[0].innerHTML = targetDiscount*-10+'%'
