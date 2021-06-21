@@ -5,13 +5,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World of Tanks Battle Pass Calculator</title>
+    <title>borisx's world of tanks calculators</title>
 <style>
     body{
         background-color: #1C1B16;
         background-image: url(https://sg-wotp.wgcdn.co/static/5.84.0_19f5c5/wotp_static/img/core/frontend/scss/common/blocks/sparkles/img/sparkles.png);
         color: #fff;
         font-family: bebas neue;
+        margin: 0;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
     }
     .logo{
         position: fixed;
@@ -20,19 +24,20 @@
     }
     .container{
         position: fixed;
-        top: calc(5% + 136px);
+        top: 80px;
         width: 100%;
+        max-width: 720px;
         text-align: center;
     }
     .progress-bar{
         position: relative;
         width: 80%;
-        margin-left: 10%;
+        margin: 40px 10%;
         height: 10px;
         padding: 2px;
         background: #000;
     }
-    .progress-bar::before{
+    .battlepass .progress-bar::before{
         position: absolute;
         content: '';
         box-sizing: border-box;
@@ -43,18 +48,74 @@
         width: 33%;
         left: 33%;
     }
+    .target-discount,.current-exp{
+        position: relative;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+        padding: 2px;
+    }
+    #targetDiscountSlider,#currentExpSlider{
+        width: 100%;
+    }
+    .slider-container{
+        width: 90%;
+        margin: 0 5% 20px 5%;
+    }
+    .progress-bar .seperator{
+        position: absolute;
+        content: '';
+        box-sizing: border-box;
+        border-left: 1px rgba(100,100,100,0.8) solid;
+        height: 25px;
+        top: -5px;
+        width: 1px;
+    }
+    .progress-bar .seperator p{
+        position: absolute;
+        font-size: 4px;
+        top: 20px;
+    }
+    .progress-bar :nth-child(11){
+        right: 0px;
+    }
+    .progress-bar :nth-child(11) p{
+        top: 0px;
+        left: -20px;
+        font-size: 30px;
+    }
     .bar{
         position: relative;
         box-sizing: border-box;
         height: 100%;
-        background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 3px,#FF5500 3px,#FF5500 4px);
+        background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
+    }
+    .server-info{
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid #deb887;
+        box-sizing: border-box;
+        width: 96%;
+        margin: 2%;
+    }
+    .server-selector{
+        flex-grow: 1;
+    }
+    .server-selector h3{
+        color: #fff;
+        margin: 5px;
     }
     .info{
+        flex-grow: 2;
         color: #deb887;
         margin: 10px;
+        justify-content: left;
     }
-    .info h2{
-        margin: 0px;
+    .info h3,.info h2{
+        font-size: 18px;
+        margin: 5px;
     }
     .target{
         width: 50%;
@@ -64,9 +125,9 @@
         font-size: 20px;
         margin: 0px;
     }
-    .target h1{
+    .target h1,.warning h1{
         color: #deb887;
-        font-size: 64px;
+        font-size: 42px;
         margin: 0px;
     }
     .target-daily-average h1{
@@ -80,12 +141,12 @@
     input[type=number] {
     -moz-appearance: textfield;
     }
-    .target-current-battlepass input{
+    .current-point input{
         color: aquamarine;
         font-family: bebas neue;
-        font-size: 64px;
+        font-size: 42px;
         width: 40%;
-        min-width: 200px;
+        min-width: 100px;
         text-align: center;
         background: none;
         border:3px solid rgb(85, 85, 85);
@@ -97,6 +158,8 @@
         width: 100%;
         font-size: 64px;
         margin: 0px;
+        display: flex;
+        justify-content: center;
     }
     .credit a{
         text-decoration: none;
@@ -104,94 +167,420 @@
         text-align: center;
         color: #8b8b8b;
     }
+    .navbar{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height:70px;
+        background-color: rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: space-around;
+    }
+    .logo-s{
+        flex-grow: 1;
+        width: 127px;
+        height: 66px;
+        background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjcgMjUiIHdpZHRoPSIxMjciIGhlaWdodD0iMjUiPjxwYXRoIGQ9Ik02OC42IDMuN2gtNC4xbC0uMSAxNS45aDMuOWMyLjcgMCAzLjktMi40IDMuOC00LjFWNy43Yy4yLTIuMi0xLjYtNC0zLjUtNHpNNS44IDEuOUwyLjIgNS41aDUuMXYxNC42bDEuOCAxLjggMS44LTEuOFY1LjVoNWwtMy42LTMuNkg1Ljh6bS0uMiA1SDIuMXY4LjJsMi42IDIuNiAyLjUtMi40LTEuNi0xLjVWNi45em0xMi4yIDl2LTExTDEzLjIuNEg0LjlMLjIgNXYxMC45TDkgMjQuNWw4LjgtOC42em0tMTYuNy0uM1Y1LjNsNC4yLTQuMWg3LjRsNC4xIDR2MTAuM2wtNy45IDcuNy03LjgtNy42em0xMS4zLTEuOGwtMS41IDEuNSAyLjQgMi40IDIuNi0yLjZWNi45aC0zLjV2Ni45em01Ni45IDJjMCAuNS0uNC44LS44LjhoLTEuMVY2LjhoMS4xYy40IDAgLjguNC44Ljh2OC4yek01OS40IDMuN2gtM3YxNS45aDd2LTMuMWgtMy45bC0uMS0xMi44em0tMTcuNyAwYy0xLjcgMC0yLjUuOS0zLjEgMS42cy0uOCAxLjgtLjggMi41djcuOWMwIDEuNC41IDIuNCAxLjIgMi45IDEgLjggMS41IDEgMi43IDEuMWguMmMxLjEgMCAxLjgtLjMgMi42LTEgLjMtLjMgMS4yLTEuNCAxLjItMi42di04Yy0uMS0yLjYtMS45LTQuNC00LTQuNHptLjkgMTIuMWMwIC41LS40LjktLjkuOXMtLjktLjQtLjktLjlWNy42YzAtLjUuNC0uOS45LS45cy45LjQuOS45djguMnptMTAuNy0zYy41LS41IDEuMy0xLjUgMS4zLTIuNVY3LjRjLS4zLTIuNC0xLjctMy42LTQuMS0zLjdoLTMuOHYxNS45aDIuOXYtNS43aC44bDEuNiA1LjdoMy4ybC0uMi0uNy0xLjctNi4xem0tMS43LTIuOWMwIC41LS40LjktMSAuOWgtMS4xVjYuOWgxLjRjLjQgMCAuNy40LjcuN3YyLjN6bTI2LjkgMS41Yy4xLTEuNS0xLjQtMi41LTIuNi0yLjUtMS42IDAtMi42IDEuMS0yLjYgMi42djUuM2MtLjEgMS41IDEgMi45IDIuNSAyLjlzMi44LTEuMyAyLjctMi43di01LjZ6bS0yLjEgNS40YzAgLjMtLjIuNS0uNS41cy0uNS0uMi0uNS0uNXYtNS40YzAtLjMuMi0uNS41LS41cy41LjIuNS41djUuNHptNDIuMy0xMy4xSDExNWwtMi4yIDQuNVYzLjhoLTNsLS4xIDE1LjloM1YxM2wyLjYgNi43aDMuNGwtMy44LTkuNCAzLjgtNi42ek03OS42IDE5LjZoMi4ydi00LjRoMnYtMS45aC0yLjF2LTIuMWgyLjhWOS4xaC01bC4xIDEwLjV6bTI2LTguNWwtMi40LTcuM2gtMy4zdjE1LjloMy4xdi03LjZsMi41IDcuNmgzLjF2LTE2aC0zdjcuNHpNOTEuMiA2Ljh2LTNoLTcuOHYzaDIuNHYxMi45aDMuMVY2LjhoMi4zem0xLjYtMy4xdi4ybC0yLjcgMTUuN2gzLjJsLjYtMy43aDEuNmwuNSAzLjdoMy4yTDk2LjUgMy43aC0zLjd6bTEuMiA5LjZsLjYtMy4yLjUgMy4ySDk0em0zMC42LTEuN2MtLjUtLjQtLjgtLjctMS4xLTEtLjMtLjItLjUtLjQtLjgtLjctLjQtLjQtMS4xLTEuMy0xLjEtMS45IDAtLjQtLjEtLjcuMy0xLjEuMi0uMi40LS4zLjYtLjNoLjFjLjMuMS42LjQuNy45bC4yLjkgMy0uNGMwLS4yIDAtMS0uMi0xLjUtLjUtMS4zLTEuNi0yLjMtMi45LTIuNi0uMy0uMS0uNi0uMS0uOS0uMS0uNSAwLTEuMS4xLTEuNy4zLTEgLjQtMi40IDEuOC0yLjMgMy42IDAgLjkgMCAxLjcuNyAyLjcuOSAxLjMgMi4yIDIuNCAzLjUgMy42LjYuNSAxLjEgMS41LjcgMi4zLS4yLjQtLjUuNi0uOC42LS4yIDAtLjQtLjEtLjYtLjMtLjYtLjUtLjUtMS40LS42LTEuOWwtMyAuMWMwIDIgLjkgMy42IDEuOSA0LjRzMyAuOCA0LjIuNGMuOC0uMyAyLjItMS44IDIuNC0zLjUtLjEtMi0xLjMtMy43LTIuMy00LjV6bS05MS4yLTFsLS44LTYuOGgtMy4xbC0uOCA2LjgtLjgtNi44aC0zLjJsMi42IDE1LjloMi45bC45LTUuNyAxIDUuN2gyLjhsMi40LTE1LjloLTMuMmwtLjcgNi44eiIgZmlsbD0iI2NlZDBjZSIvPjwvc3ZnPg==) center no-repeat ;
+    }
+    .navbar ul{
+        flex-grow: 6;
+        display: flex;
+        width: calc(100%-150px);
+        margin: 0;
+        padding: 0;
+        justify-content: space-between;
+    }
+    .navbar li{
+        flex-grow: 1;
+        position: relative;
+        list-style: none;
+        height: 100%;
+        text-align: center;
+        transition: background-position .5s;
+        background-size: cover !important;
+        background-position: 0 40% !important;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .navbar li::before{
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100px;
+        transition: background-color .5s;
+        background-color: rgba(0,0,0,0.5);
+        height: inherit;
+        z-index: 2;
+    }
+    .navbar li:hover{
+        cursor: pointer;
+        background-position: 0 20% !important;
+    }
+    .navbar li:hover::before {
+        background-color: rgba(0,0,0,0);
+    }
+    #btn-bp4{
+        background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_4_615x346.jpg");
+    }
+    #btn-bp5{
+        background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg");
+    }
 </style></head>
 
 <body>
-    <img class="logo" src="https://content-wg.gcdn.co/locdoc/rich-article/bp_2021/img/logo.35943a.png" alt="">
+    <div class="navbar">
+        <div class="logo-s"></div>
+        <ul>
+            <li id="btn-bp4"><p>battlepass IV</p></li>
+            <!-- <li id="btn-kpfpz07">kpfpz 07 RH</li> -->
+            <li id="btn-bp5"><p>battlepass V</p></li>
+        </ul>
+    </div>
     <div class="container">
-        <h1>Battle Pass Season 4 Calculator</h1>
-        <div class="progress-bar">
-            <div class="bar" style="width: 36.963%;"></div>
+        <h1 class="title">title</h1>
+        <div class="server-info">
+            <div class="server-selector">
+                <h3>Select your server:</h3>
+                <select name="server" id="server">
+                    <option value="ASIA">ASIA server</option>
+                    <option value="EU">EU server</option>
+                    <option value="US">US server</option>
+                    <option value="RU">RU server</option>
+                </select>
+            </div>
+            <div class="info">
+                <h2>Start：</h2>
+                <h2>End：</h2>
+                <h3 class="date">current time</h3>
+            </div>
         </div>
-        <div>
-            <h3>Select your server:</h3>
-            <select name="server" id="server">
-                <option value="ASIA">ASIA server</option>
-                <option value="EU">EU server</option>
-                <option value="US">US server</option>
-                <option value="RU">RU server</option>
-            </select>
+        <div class="warning">
+            <h1></h1>
         </div>
-        <div class="info">
-            <h2>Start：</h2>
-            <h2>End：</h2>
+        <div class="output battlepass">
+            <div class="progress-bar">
+                <div class="bar"></div>
+            </div>
+            <div class="target target-point">
+                <h2>Target progression</h2>
+                <h1>2772</h1>
+            </div>
+            <div class="target target-lv">
+                <h2>target level</h2>
+                <h1>55</h1>
+            </div>
+            <div class="target current-point">
+                <h2>your current progression</h2>
+                <input name="currentBattlepass" id="currentBattlepass" type="number" value=""></input>
+            </div>
+            <div class="target daily-average">
+                <h2>Daily avg. progression</h2>
+                <h1>2772</h1>
+            </div>
         </div>
-        <h3 class="date">current time</h3>
-        <div class="target target-battlepass-point">
-            <h2>Target progression point</h2>
-            <h1>2772</h1>
-        </div>
-        <div class="target target-battlepass-lv">
-            <h2>target battle pass level</h2>
-            <h1>55</h1>
-        </div>
-        <div class="target target-current-battlepass">
-            <h2>enter your current progression</h2>
-            <input name="currentBattlepass" id="currentBattlepass" type="number" value=""></input>
-        </div>
-        <div class="target target-daily-average">
-            <h2>Daily average progression</h2>
-            <h1>2772</h1>
-        </div>
-        <div class="credit">
-            <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
+        <div class="output marathon">
+            <div class="progress-bar">
+                <div class="bar"></div>
+                <div class="seperator"><p>-10%</p></div>
+                <div class="seperator"><p>-20%</p></div>
+                <div class="seperator"><p>-30%</p></div>
+                <div class="seperator"><p>-40%</p></div>
+                <div class="seperator"><p>-50%</p></div>
+                <div class="seperator"><p>-60%</p></div>
+                <div class="seperator"><p>-70%</p></div>
+                <div class="seperator"><p>-80%</p></div>
+                <div class="seperator"><p>-90%</p></div>
+                <div class="seperator"><p>-100%</p></div>
+            </div>
+            <div class="slider-container">
+                <h3>Move slider to choose your target level</h3>
+                <input type="range" id="targetDiscountSlider" min="1" max="10" value="5" class="slider" id="myRange">
+            </div>
+            <div class="slider-container">
+                <h3>Move slider to match your current progress</h3>
+                <input type="range" id="currentExpSlider" min="0" max="1250" value="0" class="slider" id="myRange">
+            </div>
+            <div class="target current-exp-num">
+                <h2>You are at:</h2>
+                <h1>2772</h1>
+            </div>
+            <div class="target target-exp">
+                <h2>You should be at:</h2>
+                <h1>2772</h1>
+            </div>
+            <div class="target daily-average">
+                <h2>Daily average</h2>
+                <h1>1</h1>
+            </div>
         </div>
     </div>
+    <div class="credit">
+        <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
+    </div>
 <script>
-    const asia = [new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/22 02:00:00  UTC+8')];
-    const us = [new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/22 00:30:00  UTC-8')];
-    const eu = [new Date('2021/03/15 04:00:00 UTC+1'),new Date('2021/06/23 02:30:00  UTC+2')];
-    const ru = [new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/23 03:30:00  UTC+3')];
-    const battlepass = 7500;
-    var server = 'ASIA';
-    var time = asia;
-    document.querySelector('#server').onchange = function(){
-        server = document.querySelector('#server').value;
-        if(server == 'ASIA'){
-            time = asia;
-        }else if(server == 'EU'){
-            time = eu;
-        }else if(server == 'US'){
-            time = us;
-        }else if(server == 'RU'){
-            time = ru;
-        };
-    };
-    var update = ()=>{
-        document.querySelector('.info').children[0].innerHTML = 'Start:2021-'+(time[0].getMonth()+1)+'-'+time[0].getDate()+' '+time[0].getHours()+':00 UTC+'+(time[0].getTimezoneOffset()/-60);
-        document.querySelector('.info').children[1].innerHTML = 'End:2021-'+(time[1].getMonth()+1)+'-'+time[1].getDate()+' '+time[1].getHours()+':00 UTC+'+(time[1].getTimezoneOffset()/-60);
-        let currentDate = new Date();
-        let totalTime = time[1] - time[0];
-        let duration = currentDate - time[0];
-        let targetBattlepass = Math.floor(battlepass*(duration/totalTime));
-        let targetBattlepassLv = Math.ceil(targetBattlepass/50);
-        let input = parseFloat(document.querySelector('#currentBattlepass').value)
-        let currentBattlepass;
-        if (isNaN(input) || input == 0) {
-            currentBattlepass = targetBattlepass;
-        }else{
-            currentBattlepass = document.querySelector('#currentBattlepass').value;
-        };
-        let average = Math.ceil((battlepass - currentBattlepass)/((totalTime - duration)/1000/60/60/24));
-        document.querySelector('.bar').style.width = (duration/totalTime)*100+'%';
-        document.querySelector('.date').innerHTML = 'Current time is 2021-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+' '+currentDate.getHours()+':'+currentDate.getMinutes()+':'+currentDate.getSeconds();
-        document.querySelector('.target-battlepass-point').children[1].innerHTML = targetBattlepass;
-        document.querySelector('.target-battlepass-lv').children[1].innerHTML = targetBattlepassLv;
-        document.querySelector('.target-daily-average').children[1].innerHTML = average;
-        setTimeout(() => {
-            update();
-        }, 1000);
+    var marathon={
+        title:'kampfpanzer 07 rh marathon calculator',
+        timespan:{
+            ASIA:[new Date('2021/05/21 09:00:00 UTC+8'),new Date('2021/05/31 09:00:00  UTC+8')],
+            US:[new Date('2021/05/21 07:00:00 UTC-8'),new Date('2021/05/31 07:00:00  UTC-8')],
+            EU:[new Date('2021/05/21 10:00:00 UTC+1'),new Date('2021/05/31 10:00:00  UTC+2')],
+            RU:[new Date('2021/05/21 09:00:00 UTC+3'),new Date('2021/05/31 09:00:00  UTC+3')]
+        },
+        expStage:[3000,5000,9000,16000,28000,30000,33000,36000,40000,50000],
+        expSum:[3000,8000,17000,33000,61000,91000,124000,160000,200000,250000],
+        display:{
+            currentExp:document.querySelector('.marathon .current-exp-num').children[1],
+            targetExp:document.querySelector('.marathon .target-exp').children[1],
+            dailyAverage:document.querySelector('.marathon .daily-average').children[1],
+            dateStart:document.querySelector('.info').children[0],
+            dateEnd:document.querySelector('.info').children[1],
+            dateCurrent:document.querySelector('.date'),
+            progressBar:document.querySelector('.marathon .progress-bar')
+        },
+        controller:{
+            targetDiscountSlider:document.querySelector('#targetDiscountSlider'),
+            currentExpSlider:document.querySelector('#currentExpSlider')
+        },
+        stageCalc:function(input){
+            let stage
+            let stageExp
+            for(var i=0;i<this.expSum.length;i++){
+                if(input - this.expSum[i] > 0){
+                    i++
+                }
+                if(input - this.expSum[i] < 0 && i>0){
+                    stageExp = input - this.expSum[i-1]
+                    stage = i+1
+                    return [stage,Number(stageExp).toLocaleString()]
+                }
+                if(input - this.expSum[i] < 0 && i==0){
+                    stageExp = input
+                    stage = 1
+                    return [stage,Number(stageExp).toLocaleString()]
+                }
+                if(input - this.expSum[i] == 0){
+                    stageExp = input
+                    stage = i+1
+                    return [stage,Number(stageExp).toLocaleString()]
+                }
+            }
+        },
+        update:function(){
+            document.title = this.title
+            document.querySelector('.title').innerHTML = this.title
+            document.querySelectorAll('.output').forEach(el=>{
+                el.style.display = 'none'
+            })
+            document.querySelector('.warning').children[0].innerHTML=''
+            //update times in the info section
+            let dateStart = timer.timeParse('start')
+            let dateEnd = timer.timeParse('end')
+            let dateCurrent = timer.timeParse('current')
+            this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
+            this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
+            this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
+            //check if the event is ongoing
+            if(timer.ongoing(marathon)[0] == 2){
+                document.querySelector('.output.marathon').style.display = 'block'
+                //calculate where player should be at
+                let targetDiscount = this.controller.targetDiscountSlider.value
+                let targetSum = this.expSum[targetDiscount-1]
+                let targetExp = Math.ceil(targetSum*timer.timeProgress())
+                if(targetExp <= this.expSum[9]){
+                    this.display.targetExp.innerHTML ='Stage '+this.stageCalc(targetExp)[0]+' - '+this.stageCalc(targetExp)[1]
+                }
+                if(targetExp > this.expSum[9]){
+                    this.display.targetExp.innerHTML ='Stage 10 - 250,000'
+                }
+                //update progress bar
+                this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%'
+                this.display.progressBar.children[10].children[0].innerHTML = targetDiscount*-10+'%'
+                for(var i=1;i<10;i++){
+                    this.display.progressBar.children[i].style.display = 'none'
+                    if(i<targetDiscount){
+                        this.display.progressBar.children[i].style.left = this.expSum[i-1]/targetSum*100+'%'
+                        this.display.progressBar.children[i].style.display = 'block'
+                    }
+                }
+                //update player's current progress
+                let currentExp = this.controller.currentExpSlider.value*200
+                this.display.currentExp.innerHTML = 'Stage '+this.stageCalc(currentExp)[0]+' - '+this.stageCalc(currentExp)[1]
+                //update daily average
+                let dailyExp = Math.ceil((targetSum-currentExp)/((timer.timeTotal()-timer.timePassed())/1000/60/60/24))
+                if(dailyExp<=0){
+                    this.display.dailyAverage.innerHTML = 0
+                }
+                if(dailyExp>0){
+                    this.display.dailyAverage.innerHTML = Number(dailyExp).toLocaleString()
+                }
+            }
+            else{
+                document.querySelector('.output').style.display = 'none'
+                document.querySelector('.warning').children[0].innerHTML = timer.ongoing(marathon)[1]
+            }
+        }
     }
-    document.ready = update();
+    var eventSetting={
+        battlepass4:{
+            title:'battlepass season IV calculator',
+            timespan:{
+            ASIA:[new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/22 02:00:00  UTC+8')],
+            US:[new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/22 00:30:00  UTC-8')],
+            EU:[new Date('2021/03/15 04:00:00 UTC+1'),new Date('2021/06/23 02:30:00  UTC+2')],
+            RU:[new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/23 03:30:00  UTC+3')]
+            },
+            mode:'battlepass'
+        },
+        battlepass5:{
+            title:'battlepass season V calculator',
+            timespan:{
+            ASIA:[new Date('2021/06/22 00:05:00 UTC+8'),new Date('2021/09/06 06:00:00  UTC+8')],
+            US:[new Date('2021/06/22 04:00:00 UTC-8'),new Date('2021/09/06 03:30:00  UTC-8')],
+            EU:[new Date('2021/06/23 08:30:00 UTC+1'),new Date('2021/09/06 06:30:00  UTC+2')],
+            RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
+            },
+            mode:'battlepass'
+        }
+    }
+    var battlepass={
+        title:"battlepass calculator",
+        totalPoint:7500,
+        display:{
+            dateStart:document.querySelector('.info').children[0],
+            dateEnd:document.querySelector('.info').children[1],
+            dateCurrent:document.querySelector('.info .date'),
+            targetPoint:document.querySelector('.battlepass .target-point').children[1],
+            targetLevel:document.querySelector('.battlepass .target-lv').children[1],
+            currentPoint:document.querySelector('.battlepass .current-point').children[1],
+            dailyAverage:document.querySelector('.battlepass .daily-average').children[1],
+            progressBar:document.querySelector('.battlepass .progress-bar')
+        },
+        update:function(){
+            document.title = this.title
+            document.querySelector('.title').innerHTML = this.title
+            document.querySelectorAll('.output').forEach(el=>{
+                el.style.display = 'none'
+            })
+            document.querySelector('.warning').children[0].innerHTML=''
+            //update times in the info section
+            let dateStart = timer.timeParse('start')
+            let dateEnd = timer.timeParse('end')
+            let dateCurrent = timer.timeParse('current')
+            this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
+            this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
+            this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
+            //check if the event is ongoing
+            if(timer.ongoing(battlepass)[0] == 2){
+                document.querySelector('.output.battlepass').style.display = 'block'
+                let currentDate = timer.dateCurrent;
+                let targetPoint = Math.floor(this.totalPoint*timer.timeProgress());
+                let targetLevel = Math.ceil(targetPoint/50);
+                let input = parseInt(this.display.currentPoint.value)
+                //custom progression
+                let currentPoint;
+                if (isNaN(input) || input == 0) {
+                    currentPoint = targetPoint
+                }else{
+                    currentPoint = input
+                };
+                let average = Math.ceil((this.totalPoint - currentPoint)/(timer.timeTotal()/timer.timePassed()));
+                this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%';
+                this.display.targetPoint.innerHTML = targetPoint;
+                this.display.targetLevel.innerHTML = targetLevel;
+                this.display.dailyAverage.innerHTML = average;
+            }
+            else{
+                document.querySelector('.output').style.display = 'none'
+                document.querySelector('.warning').children[0].innerHTML = timer.ongoing(battlepass)[1]
+            }
+        }
+    }
+    var timer={
+        ongoing:function(){
+            let dateStart = this.timeParse('start')
+            let dateEnd = this.timeParse('end')
+            let dateCurrent = this.timeParse('current')
+            if(dateCurrent>dateEnd){
+                return [0,'Event has ended!']
+            }
+            else if(dateCurrent<dateStart){
+                let countdown = parseInt(timer.timePassed()/-1000)
+                let day = parseInt(countdown/86400)
+                let hour = parseInt(countdown/3600)%24
+                let minute = parseInt(countdown/60)%60
+                let second = countdown%60
+                return [1,'Event will start in '+day+':'+hour+':'+minute+':'+second]
+            }
+            else{
+                return [2]
+            }
+        },
+        server:function(){
+            return document.querySelector('#server').value
+        },
+        timeCurrent:function(){
+            let date =  new Date()
+            // add offset for debug use
+            // date.setDate(date.getDate() + 2);
+            return date;
+        },
+        timeTotal:function(server=this.server(),mode=this.mode){
+            return this.timespan[server][1] - this.timespan[server][0]
+        },
+        timePassed:function(server=this.server(),mode=this.mode){
+            return this.timeCurrent() - this.timespan[server][0]
+        },
+        timeProgress:function(server=this.server(),mode=this.mode){
+            return this.timePassed(server) / this.timeTotal(server)
+        },
+        timeParse:function(i){
+            let time
+            switch (i) {
+                case 'start':
+                    time = this.timespan[this.server()][0]
+                    break;
+                case 'end':
+                    time = this.timespan[this.server()][1]
+                    break;
+                case 'current':
+                    time = this.timeCurrent()
+                    break;
+                default:
+                    break;
+            }
+            return [time.getFullYear(),time.getMonth()+1,time.getDate(),time.getHours(),time.getMinutes(),time.getSeconds(),time.getTimezoneOffset()/-60]
+        }
+    }
+    var changeMode = function(event){
+        console.log(event,event.mode)
+        timer.timespan=event.timespan
+        timer.mode=window[event.mode]
+        window[event.mode].title=event.title
+    }
+    changeMode(eventSetting.battlepass5)
+    document.querySelector('#btn-bp5').onclick = function(){
+        changeMode(eventSetting.battlepass5)
+    }
+    document.querySelector('#btn-bp4').onclick = function(){
+        changeMode(eventSetting.battlepass4)
+    }
+    document.querySelector('#server').onchange = function(){
+        timer.mode.update()
+    }
+    document.querySelector('#targetDiscountSlider').onchange = function(){
+        timer.mode.update()
+    }
+    document.querySelector('#currentExpSlider').onchange = function(){
+        timer.mode.update()
+    }
+    var loop = setInterval(()=>{
+        timer.mode.update()
+    },500)
 </script>
 </body></html>
