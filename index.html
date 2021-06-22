@@ -476,7 +476,7 @@
             this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
             this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
-            if(timer.ongoing(battlepass)[0] == 2){
+            if(timer.ongoing()[0] == 2){
                 document.querySelector('.output.battlepass').style.display = 'block'
                 let currentDate = timer.dateCurrent;
                 let targetPoint = Math.floor(this.totalPoint*timer.timeProgress());
@@ -497,15 +497,16 @@
             }
             else{
                 document.querySelector('.output').style.display = 'none'
-                document.querySelector('.warning').children[0].innerHTML = timer.ongoing(battlepass)[1]
+                document.querySelector('.warning').children[0].innerHTML = timer.ongoing()[1]
             }
         }
     }
     var timer={
-        ongoing:function(){
-            let dateStart = this.timeParse('start')
-            let dateEnd = this.timeParse('end')
-            let dateCurrent = this.timeParse('current')
+        ongoing:function(server=this.server()){
+            let dateStart = this.timespan[server][0]
+            let dateEnd = this.timespan[server][1]
+            let dateCurrent = new Date()
+            console.log(dateCurrent,dateStart,dateCurrent<dateStart)
             if(dateCurrent>dateEnd){
                 return [0,'Event has ended!']
             }
@@ -566,9 +567,11 @@
     changeMode(eventSetting.battlepass5)
     document.querySelector('#btn-bp5').onclick = function(){
         changeMode(eventSetting.battlepass5)
+        timer.mode.update()
     }
     document.querySelector('#btn-bp4').onclick = function(){
         changeMode(eventSetting.battlepass4)
+        timer.mode.update()
     }
     document.querySelector('#server').onchange = function(){
         timer.mode.update()
@@ -579,8 +582,8 @@
     document.querySelector('#currentExpSlider').onchange = function(){
         timer.mode.update()
     }
-    var loop = setInterval(()=>{
-        timer.mode.update()
-    },500)
+    // var loop = setInterval(()=>{
+    //     timer.mode.update()
+    // },500)
 </script>
 </body></html>
