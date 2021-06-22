@@ -17,156 +17,7 @@
         display: flex;
         justify-content: center;
     }
-    .logo{
-        position: fixed;
-        left: calc(50% - 154.5px);
-        top: 5%;
-    }
-    .container{
-        position: fixed;
-        top: 80px;
-        width: 100%;
-        max-width: 720px;
-        text-align: center;
-    }
-    .progress-bar{
-        position: relative;
-        width: 80%;
-        margin: 40px 10%;
-        height: 10px;
-        padding: 2px;
-        background: #000;
-    }
-    .battlepass .progress-bar::before{
-        position: absolute;
-        content: '';
-        box-sizing: border-box;
-        border-left: 1px rgba(100,100,100,0.5) dotted;
-        border-right: 1px rgba(100,100,100,0.5) dotted;
-        height: 25px;
-        top: -5px;
-        width: 33%;
-        left: 33%;
-    }
-    .target-discount,.current-exp{
-        position: relative;
-        width: 80%;
-        margin-left: 10%;
-        margin-top: 20px;
-        padding: 2px;
-    }
-    #targetDiscountSlider,#currentExpSlider{
-        width: 100%;
-    }
-    .slider-container{
-        width: 90%;
-        margin: 0 5% 20px 5%;
-    }
-    .progress-bar .seperator{
-        position: absolute;
-        content: '';
-        box-sizing: border-box;
-        border-left: 1px rgba(100,100,100,0.8) solid;
-        height: 25px;
-        top: -5px;
-        width: 1px;
-    }
-    .progress-bar .seperator p{
-        position: absolute;
-        font-size: 4px;
-        top: 20px;
-    }
-    .progress-bar :nth-child(11){
-        right: 0px;
-    }
-    .progress-bar :nth-child(11) p{
-        top: 0px;
-        left: -20px;
-        font-size: 30px;
-    }
-    .bar{
-        position: relative;
-        box-sizing: border-box;
-        height: 100%;
-        background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
-    }
-    .server-info{
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        align-items: center;
-        border: 1px solid #deb887;
-        box-sizing: border-box;
-        width: 96%;
-        margin: 2%;
-    }
-    .server-selector{
-        flex-grow: 1;
-    }
-    .server-selector h3{
-        color: #fff;
-        margin: 5px;
-    }
-    .info{
-        flex-grow: 2;
-        color: #deb887;
-        margin: 10px;
-        justify-content: left;
-    }
-    .info h3,.info h2{
-        font-size: 18px;
-        margin: 5px;
-    }
-    .target{
-        width: 50%;
-        float: left;
-    }
-    .target h2{
-        font-size: 20px;
-        margin: 0px;
-    }
-    .target h1,.warning h1{
-        color: #deb887;
-        font-size: 42px;
-        margin: 0px;
-    }
-    .target-daily-average h1{
-        color: aquamarine;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-    }
-    input[type=number] {
-    -moz-appearance: textfield;
-    }
-    .current-point input{
-        color: aquamarine;
-        font-family: bebas neue;
-        font-size: 42px;
-        width: 40%;
-        min-width: 100px;
-        text-align: center;
-        background: none;
-        border:3px solid rgb(85, 85, 85);
-        border-radius: 10px;
-    }
-    .credit{
-        position:fixed;
-        bottom: 3%; 
-        width: 100%;
-        font-size: 64px;
-        margin: 0px;
-        display: flex;
-        justify-content: center;
-    }
-    .credit a{
-        text-decoration: none;
-        font-size: 18px;
-        text-align: center;
-        color: #8b8b8b;
-    }
+    /* nabar */
     .navbar{
         position: fixed;
         left: 0;
@@ -231,6 +82,155 @@
     #btn-bp5{
         background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg");
     }
+    /* end of navbar */
+    .container{
+        position: fixed;
+        top: 80px;
+        width: 100%;
+        max-width: 720px;
+        text-align: center;
+    }
+    .progress-bar{
+        position: relative;
+        width: 90%;
+        margin: 40px 5%;
+        height: 10px;
+        padding: 2px;
+        background: #000;
+    }
+    .progress-bar .seperator{
+        position: absolute;
+        content: '';
+        box-sizing: border-box;
+        border-left: 1px rgba(100,100,100,0.8) solid;
+        height: 25px;
+        top: -5px;
+        width: 1px;
+    }
+    .progress-bar .seperator p{
+        position: absolute;
+        font-size: 4px;
+        top: 20px;
+    }
+    .progress-bar :nth-child(11){
+        right: 0px;
+    }
+    .progress-bar :nth-child(11) p{
+        top: 0px;
+        left: -20px;
+        font-size: 30px;
+    }
+    .bar{
+        position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
+    }
+    .battlepass .progress-bar::before{
+        position: absolute;
+        content: '';
+        box-sizing: border-box;
+        border-left: 1px rgba(100,100,100,0.5) dotted;
+        border-right: 1px rgba(100,100,100,0.5) dotted;
+        height: 25px;
+        top: -5px;
+        width: 33%;
+        left: 33%;
+    }
+    .target-discount,.current-exp{
+        position: relative;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+        padding: 2px;
+    }
+    #targetDiscountSlider,#currentExpSlider{
+        width: 100%;
+    }
+    .slider-container{
+        width: 90%;
+        margin: 0 5% 20px 5%;
+    }
+    /* server selector */
+    .server-info{
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid #deb887;
+        box-sizing: border-box;
+        width: 96%;
+        margin: 2%;
+    }
+    .server-selector{
+        flex-grow: 1;
+    }
+    .server-selector h3{
+        color: #fff;
+        margin: 5px;
+    }
+    .info{
+        flex-grow: 2;
+        color: #deb887;
+        margin: 10px;
+        justify-content: left;
+    }
+    .info h3,.info h2{
+        font-size: 18px;
+        margin: 5px;
+    }
+    /* end of server selector */
+    .target{
+        width: 50%;
+        float: left;
+    }
+    .target h2{
+        font-size: 20px;
+        margin: 0px;
+    }
+    .target h1,.warning h1{
+        color: #deb887;
+        font-size: 42px;
+        margin: 0px;
+    }
+    .target-daily-average h1{
+        color: aquamarine;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+    .current-point input{
+        color: aquamarine;
+        font-family: bebas neue;
+        font-size: 42px;
+        width: 40%;
+        min-width: 100px;
+        text-align: center;
+        background: none;
+        border:3px solid rgb(85, 85, 85);
+        border-radius: 10px;
+    }
+    .credit{
+        position:fixed;
+        bottom: 3%; 
+        width: 100%;
+        font-size: 64px;
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .credit a{
+        text-decoration: none;
+        font-size: 18px;
+        text-align: center;
+        color: #8b8b8b;
+    }
+    
     .output{
         display: none;
     }
@@ -258,9 +258,9 @@
                 </select>
             </div>
             <div class="info">
-                <h2>Start：</h2>
-                <h2>End：</h2>
-                <h3 class="date">current time</h3>
+                <h2 class="date-start">Start：</h2>
+                <h2 class="date-end">End：</h2>
+                <h3 class="date-current">current time</h3>
             </div>
         </div>
         <div class="warning">
@@ -271,15 +271,15 @@
                 <div class="bar"></div>
             </div>
             <div class="target target-point">
-                <h2>Target progression</h2>
+                <h2>Target progression point</h2>
                 <h1>2772</h1>
             </div>
             <div class="target target-lv">
-                <h2>target level</h2>
+                <h2>You should be at level</h2>
                 <h1>55</h1>
             </div>
             <div class="target current-point">
-                <h2>your current progression</h2>
+                <h2>your current progression point</h2>
                 <!-- <select name="currentLevelDropdown" id="currentLevelDropdown">
                     <option value="0">0</option>
                 </select> -->
@@ -306,11 +306,11 @@
             </div>
             <div class="slider-container">
                 <h3>Move slider to choose your target level</h3>
-                <input type="range" id="targetDiscountSlider" min="1" max="10" value="5" class="slider" id="myRange">
+                <input type="range" id="targetDiscountSlider" min="1" max="10" value="5" class="slider">
             </div>
             <div class="slider-container">
                 <h3>Move slider to match your current progress</h3>
-                <input type="range" id="currentExpSlider" min="0" max="1250" value="0" class="slider" id="myRange">
+                <input type="range" id="currentExpSlider" min="0" max="1250" value="0" class="slider">
             </div>
             <div class="target current-exp-num">
                 <h2>You are at:</h2>
@@ -458,9 +458,6 @@
         title:"battlepass calculator",
         totalPoint:7500,
         display:{
-            dateStart:document.querySelector('.info').children[0],
-            dateEnd:document.querySelector('.info').children[1],
-            dateCurrent:document.querySelector('.info .date'),
             targetPoint:document.querySelector('.battlepass .target-point').children[1],
             targetLevel:document.querySelector('.battlepass .target-lv').children[1],
             currentPoint:document.querySelector('.battlepass .current-point').children[1],
@@ -474,13 +471,6 @@
                 el.style.display = 'none'
             })
             document.querySelector('.warning').children[0].innerHTML=''
-            //update times in the info section
-            let dateStart = timer.timeParse('start')
-            let dateEnd = timer.timeParse('end')
-            let dateCurrent = timer.timeParse('current')
-            this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
-            this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
-            this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
             if(timer.ongoing()[0] == 2){
                 document.querySelector('.output.battlepass').style.display = 'block'
@@ -536,6 +526,15 @@
             // date.setDate(date.getDate() + 2);
             return date;
         },
+        timeUpdate:function(){
+            //update times in the info section
+            let dateStart = timer.timeParse('start')
+            let dateEnd = timer.timeParse('end')
+            let dateCurrent = timer.timeParse('current')
+            document.querySelector('.info .date-start').innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
+            document.querySelector('.info .date-end').innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
+            document.querySelector('.info .date-current').innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
+        },
         timeTotal:function(server=this.server()){
             return this.timespan[server][1] - this.timespan[server][0]
         },
@@ -572,26 +571,30 @@
         timer.mode=window[event.mode]
         window[event.mode].title=event.title
     }
+    var update = function(){
+        timer.mode.update()
+        timer.timeUpdate()
+    }
     changeMode(eventSetting.battlepass5)
     document.querySelector('#btn-bp5').onclick = function(){
         changeMode(eventSetting.battlepass5)
-        timer.mode.update()
+        update()
     }
     document.querySelector('#btn-bp4').onclick = function(){
         changeMode(eventSetting.battlepass4)
-        timer.mode.update()
+        update()
     }
     document.querySelector('#server').onchange = function(){
-        timer.mode.update()
+        update()
     }
     document.querySelector('#targetDiscountSlider').onchange = function(){
-        timer.mode.update()
+        update()
     }
     document.querySelector('#currentExpSlider').onchange = function(){
-        timer.mode.update()
+        update()
     }
     var loop = setInterval(()=>{
-        timer.mode.update()
+        update()
     },100)
 </script>
 </body></html>
