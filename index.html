@@ -231,6 +231,9 @@
     #btn-bp5{
         background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg");
     }
+    .output{
+        display: none;
+    }
 </style></head>
 
 <body>
@@ -389,7 +392,7 @@
             this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
             this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
-            if(timer.ongoing(marathon)[0] == 2){
+            if(timer.ongoing()[0] == 2){
                 document.querySelector('.output.marathon').style.display = 'block'
                 //calculate where player should be at
                 let targetDiscount = this.controller.targetDiscountSlider.value
@@ -425,7 +428,7 @@
             }
             else{
                 document.querySelector('.output').style.display = 'none'
-                document.querySelector('.warning').children[0].innerHTML = timer.ongoing(marathon)[1]
+                document.querySelector('.warning').children[0].innerHTML = timer.ongoing()[1]
             }
         }
     }
@@ -492,7 +495,7 @@
                 }else{
                     currentPoint = input
                 };
-                let average = Math.ceil((this.totalPoint - currentPoint)/(timer.timeTotal()/timer.timePassed()));
+                let average = Math.ceil((this.totalPoint - currentPoint)/(timer.timeRemaining()/86400000));
                 this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%';
                 this.display.targetPoint.innerHTML = targetPoint;
                 this.display.targetLevel.innerHTML = targetLevel;
@@ -533,13 +536,16 @@
             // date.setDate(date.getDate() + 2);
             return date;
         },
-        timeTotal:function(server=this.server(),mode=this.mode){
+        timeTotal:function(server=this.server()){
             return this.timespan[server][1] - this.timespan[server][0]
         },
-        timePassed:function(server=this.server(),mode=this.mode){
+        timePassed:function(server=this.server()){
             return this.timeCurrent() - this.timespan[server][0]
         },
-        timeProgress:function(server=this.server(),mode=this.mode){
+        timeRemaining:function(server=this.server()){
+            return this.timespan[server][1] - this.timeCurrent()
+        },
+        timeProgress:function(server=this.server()){
             return this.timePassed(server) / this.timeTotal(server)
         },
         timeParse:function(i){
