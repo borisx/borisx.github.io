@@ -277,6 +277,9 @@
             </div>
             <div class="target current-point">
                 <h2>your current progression</h2>
+                <!-- <select name="currentLevelDropdown" id="currentLevelDropdown">
+                    <option value="0">0</option>
+                </select> -->
                 <input name="currentBattlepass" id="currentBattlepass" type="number" value=""></input>
             </div>
             <div class="target daily-average">
@@ -506,7 +509,6 @@
             let dateStart = this.timespan[server][0]
             let dateEnd = this.timespan[server][1]
             let dateCurrent = new Date()
-            console.log(dateCurrent,dateStart,dateCurrent<dateStart)
             if(dateCurrent>dateEnd){
                 return [0,'Event has ended!']
             }
@@ -582,8 +584,8 @@
     document.querySelector('#currentExpSlider').onchange = function(){
         timer.mode.update()
     }
-    // var loop = setInterval(()=>{
-    //     timer.mode.update()
-    // },500)
+    var loop = setInterval(()=>{
+        timer.mode.update()
+    },100)
 </script>
 </body></html>
