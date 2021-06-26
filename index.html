@@ -102,7 +102,7 @@
                 position: relative;
                 width: 90%;
                 margin: 40px 5%;
-                height: 10px;
+                height: 13px;
                 padding: 2px;
                 background: #000;
             }
@@ -111,7 +111,7 @@
                 content: '';
                 box-sizing: border-box;
                 border-left: 1px rgba(100,100,100,0.8) solid;
-                height: 25px;
+                height: 23px;
                 top: -5px;
                 width: 1px;
             }
@@ -132,13 +132,32 @@
                 position: relative;
                 box-sizing: border-box;
                 height: 100%;
-                background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
+                background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 3px,#FF5500 3px,#FF5500 4px);
+                border-top: 1px solid #ff5500;
+                border-bottom: 1px solid #ff5500;
+            }
+            .bar::after{
+                content: '';
+                position: absolute;
+                top: -6px;
+                right: 0;
+                width: 3px;
+                height: calc(100% + 12px);
+                background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1) 20%,rgba(255,255,255,1) 80%,rgba(255,255,255,0) 100%);
+                animation-name: flicker;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+            }
+            @keyframes flicker {
+                0%{opacity: 0.2;top:50%;height: 0;}
+                50%{opacity: 0.5;}
+                100%{opacity: 0;top: -9px;height: calc(100% + 18px);}
             }
             .battlepass .progress-bar::after{
                 position: absolute;
                 content: '';
                 top: -2px;
-                height: 19px;
+                height: calc(100% + 4px);
                 left: 0;
                 width: 100%;
                 transition: left .5s,width .5s,background .5s;
@@ -151,7 +170,7 @@
                 box-sizing: border-box;
                 border-left: 1px rgba(100,100,100,0.5) dotted;
                 border-right: 1px rgba(100,100,100,0.5) dotted;
-                height: 25px;
+                height: calc(100% + 10px);;
                 top: -5px;
                 width: calc(100%/3);
                 left: calc(100%/3);
