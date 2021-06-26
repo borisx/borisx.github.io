@@ -95,7 +95,7 @@
                 position: fixed;
                 top: 80px;
                 width: 100%;
-                max-width: 720px;
+                max-width: 1200px;
                 text-align: center;
             }
             .progress-bar{
@@ -134,6 +134,17 @@
                 height: 100%;
                 background: repeating-linear-gradient(90deg,#FFEBB1,#FFEBB1 1px,#FF5500 1px,#FF5500 2px);
             }
+            .battlepass .progress-bar::after{
+                position: absolute;
+                content: '';
+                top: -2px;
+                height: 19px;
+                left: 0;
+                width: 100%;
+                transition: left .5s,width .5s,background .5s;
+                background: repeating-linear-gradient(90deg,rgba(0,0,0),rgba(0,0,0) calc(100%/150),rgba(255,255,255) calc(100%/150),rgba(255,255,255) calc(100%/75));
+                opacity: 0.05;
+            }
             .battlepass .progress-bar::before{
                 position: absolute;
                 content: '';
@@ -142,8 +153,9 @@
                 border-right: 1px rgba(100,100,100,0.5) dotted;
                 height: 25px;
                 top: -5px;
-                width: 33%;
-                left: 33%;
+                width: calc(100%/3);
+                left: calc(100%/3);
+                transition: left .5s,width .5s,background .5s;
             }
             .target-discount,.current-exp{
                 position: relative;
@@ -194,7 +206,7 @@
             }
             .target h2{
                 font-size: 20px;
-                margin: 0px;q
+                margin: 0px;
             }
             .target h1,.warning h1{
                 color: #deb887;
@@ -498,7 +510,7 @@
                 this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%';
                 // this.display.targetPoint.innerHTML = targetPoint;
                 this.display.targetLevel.innerHTML = 'stage '+targetLevel[0]+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
-                this.display.dailyAverage.innerHTML = average;
+                this.display.dailyAverage.innerHTML = average+'<lower>pt.</lower>';
             }
             else{
                 document.querySelector('.output').style.display = 'none'
