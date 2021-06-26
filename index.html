@@ -208,8 +208,19 @@
                 color: #fff;
                 margin: 5px;
             }
+            .server-selector .server-radio-group{
+                display: flex;
+                justify-content: space-evenly;
+            }
+            .server-selector .server-radio{
+                float: left;
+                width: 50px;
+            }
+            .server-selector label{
+                text-align: left;
+            }
             .info{
-                flex-grow: 2;
+                flex-grow: 1;
                 color: #deb887;
                 margin: 10px;
                 justify-content: left;
@@ -293,12 +304,12 @@
         <div class="server-info">
             <div class="server-selector">
                 <h3>Select your server:</h3>
-                <select name="server" id="server">
-                    <option value="ASIA">ASIA server</option>
-                    <option value="EU">EU server</option>
-                    <option value="US">US server</option>
-                    <option value="RU">RU server</option>
-                </select>
+                <div class="server-radio-group">
+                    <div class="server-radio"><input id="server1" type="radio" name="server" value="ASIA" checked=true/><label for="server1">ASIA</label></div>
+                    <div class="server-radio"><input id="server2" type="radio" name="server" value="EU"/><label for="server2">EU</label></div>
+                    <div class="server-radio"><input id="server3" type="radio" name="server" value="US"/><label for="server3">US</label></div>
+                    <div class="server-radio"><input id="server4" type="radio" name="server" value="RU"/><label for="server4">RU</label></div>
+                </div>
             </div>
             <div class="info">
                 <h2 class="date-start">Start：</h2>
@@ -558,7 +569,7 @@
             }
         },
         server:function(){
-            return document.querySelector('#server').value
+            return document.querySelector('input[name=server]:checked').value
         },
         timeCurrent:function(){
             let date =  new Date()
@@ -622,9 +633,6 @@
     }
     document.querySelector('#btn-bp4').onclick = function(){
         changeMode(eventSetting.battlepass4)
-        update()
-    }
-    document.querySelector('#server').onchange = function(){
         update()
     }
     document.querySelector('#targetDiscountSlider').onchange = function(){
