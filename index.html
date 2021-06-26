@@ -19,6 +19,12 @@
                 display: flex;
                 justify-content: center;
             }
+            lower{
+                font-size: 20px;
+            }
+            h1,h2{
+                font-weight: 300;
+            }
             /* nabar */
             .navbar{
                 position: fixed;
@@ -188,12 +194,15 @@
             }
             .target h2{
                 font-size: 20px;
-                margin: 0px;
+                margin: 0px;q
             }
             .target h1,.warning h1{
                 color: #deb887;
                 font-size: 42px;
                 margin: 0px;
+            }
+            .target-lv{
+                width: 100%;
             }
             .target-daily-average h1{
                 color: aquamarine;
@@ -273,12 +282,12 @@
             <div class="progress-bar">
                 <div class="bar"></div>
             </div>
-            <div class="target target-point">
+            <!-- <div class="target target-point">
                 <h2>Target progression point</h2>
                 <h1>2772</h1>
-            </div>
+            </div> -->
             <div class="target target-lv">
-                <h2>You should be at level</h2>
+                <h2>You should be at</h2>
                 <h1>55</h1>
             </div>
             <div class="target current-point">
@@ -458,7 +467,7 @@
         title:"battlepass calculator",
         totalPoint:7500,
         display:{
-            targetPoint:document.querySelector('.battlepass .target-point').children[1],
+            // targetPoint:document.querySelector('.battlepass .target-point').children[1],
             targetLevel:document.querySelector('.battlepass .target-lv').children[1],
             currentPoint:document.querySelector('.battlepass .current-point').children[1],
             dailyAverage:document.querySelector('.battlepass .daily-average').children[1],
@@ -476,7 +485,7 @@
                 document.querySelector('.output.battlepass').style.display = 'block'
                 let currentDate = timer.dateCurrent;
                 let targetPoint = Math.floor(this.totalPoint*timer.timeProgress());
-                let targetLevel = Math.ceil(targetPoint/50);
+                let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
                 let input = parseInt(this.display.currentPoint.value)
                 //custom progression
                 let currentPoint;
@@ -487,8 +496,8 @@
                 };
                 let average = Math.ceil((this.totalPoint - currentPoint)/(timer.timeRemaining()/86400000));
                 this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%';
-                this.display.targetPoint.innerHTML = targetPoint;
-                this.display.targetLevel.innerHTML = targetLevel;
+                // this.display.targetPoint.innerHTML = targetPoint;
+                this.display.targetLevel.innerHTML = 'stage '+targetLevel[0]+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
                 this.display.dailyAverage.innerHTML = average;
             }
             else{
