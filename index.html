@@ -103,7 +103,7 @@
             }
             .progress-bar{
                 position: relative;
-                width: 90%;
+                flex-basis: 100%;
                 margin: 40px 5%;
                 height: 13px;
                 padding: 2px;
@@ -120,16 +120,16 @@
             }
             .progress-bar .seperator p{
                 position: absolute;
-                font-size: 4px;
+                font-size: 14px;
                 top: 20px;
             }
-            .progress-bar :nth-child(11){
+            .progress-bar .seperator.last{
                 right: 0px;
             }
-            .progress-bar :nth-child(11) p{
+            .progress-bar .seperator.last p{
                 top: 0px;
                 left: -20px;
-                font-size: 30px;
+                font-size: 24px;
             }
             .bar{
                 position: relative;
@@ -189,9 +189,22 @@
             #targetDiscountSlider,#currentExpSlider{
                 width: 100%;
             }
+            .show-discount{
+                flex-basis: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .show-discount h3{
+                padding-right:2rem ;
+            }
             .slider-container{
-                width: 90%;
+                flex-basis: 90%;
+                flex-grow: 1;
                 margin: 0 5% 20px 5%;
+            }
+            .slider-container h3{
+                margin: 0;
             }
             /* server selector */
             .server-info{
@@ -236,6 +249,8 @@
             .target{
                 width: 50%;
                 float: left;
+                flex-grow: 1;
+                flex-basis: 250px;
             }
             .target h2{
                 font-size: 20px;
@@ -248,6 +263,7 @@
             }
             .target-lv{
                 width: 100%;
+                flex-basis: 100%;
             }
             .target-daily-average h1{
                 color: aquamarine;
@@ -289,6 +305,7 @@
             
             .output{
                 display: none;
+                flex-wrap: wrap;
             }
         </style>
         <script data-ad-client="ca-pub-6155063328860394" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -354,6 +371,15 @@
                 <div class="seperator"><p>-90%</p></div>
                 <div class="seperator"><p>-100%</p></div>
             </div>
+            <div class="show-discount">
+                <h3>Show discount in: </h3>
+                <select id="showDiscount" value="1">
+                    <option value="0">percentage</option>
+                    <option value="CNY">CNY</option>
+                    <option value="USD">USD</option>
+                    <option value="EURO">EURO</option>
+                </select>
+            </div>
             <div class="slider-container">
                 <h3>Move slider to choose your target level</h3>
                 <input type="range" id="targetDiscountSlider" min="1" max="10" value="5" class="slider">
@@ -381,6 +407,7 @@
     </div>
 <script>
     var marathon={
+        discountDisplay:[.1,.2,.3,.4,.5,.6,.7,.8,.9,1],
         display:{
             currentExp:document.querySelector('.marathon .current-exp-num').children[1],
             targetExp:document.querySelector('.marathon .target-exp').children[1],
@@ -388,11 +415,13 @@
             dateStart:document.querySelector('.info').children[0],
             dateEnd:document.querySelector('.info').children[1],
             dateCurrent:document.querySelector('.date-current'),
-            progressBar:document.querySelector('.marathon .progress-bar')
+            progressBar:document.querySelector('.marathon .progress-bar'),
+            seperator:document.querySelectorAll('.seperator')
         },
         controller:{
             targetDiscountSlider:document.querySelector('#targetDiscountSlider'),
-            currentExpSlider:document.querySelector('#currentExpSlider')
+            currentExpSlider:document.querySelector('#currentExpSlider'),
+            showDiscount:document.querySelector('#showDiscount')
         },
         stageCalc:function(input){
             let stage
@@ -425,6 +454,15 @@
                 el.style.display = 'none'
             })
             document.querySelector('.warning').children[0].innerHTML=''
+            //change the way seperator is displayed
+            this.display.seperator.forEach((item,i)=>{
+                if (this.controller.showDiscount.value == 0) {
+                    item.children[0].innerHTML='-'+this.discountDisplay[i]*100+'%'
+                }else{
+                    item.children[0].innerHTML=this.eventSetting.price[this.controller.showDiscount.value][1]+Math.floor((1-this.discountDisplay[i])*this.eventSetting.price[this.controller.showDiscount.value][0])
+                }
+                item.classList.remove('last')
+            })
             //update times in the info section
             let dateStart = timer.timeParse('start')
             let dateEnd = timer.timeParse('end')
@@ -434,7 +472,7 @@
             this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
             if(timer.ongoing()[0] == 2){
-                document.querySelector('.output.marathon').style.display = 'block'
+                document.querySelector('.output.marathon').style.display = 'flex'
                 //calculate where player should be at
                 let targetDiscount = this.controller.targetDiscountSlider.value
                 let targetSum = this.eventSetting.expSum[targetDiscount-1]
@@ -447,14 +485,14 @@
                 }
                 //update progress bar
                 this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%'
-                this.display.progressBar.children[10].children[0].innerHTML = targetDiscount*-10+'%'
-                for(var i=1;i<10;i++){
+                for(var i=1;i<=10;i++){
                     this.display.progressBar.children[i].style.display = 'none'
-                    if(i<targetDiscount){
+                    if(i<=targetDiscount){
                         this.display.progressBar.children[i].style.left = this.eventSetting.expSum[i-1]/targetSum*100+'%'
                         this.display.progressBar.children[i].style.display = 'block'
                     }
                 }
+                this.display.seperator[targetDiscount-1].classList.add('last')
                 //update player's current progress
                 let currentExp = this.controller.currentExpSlider.value*200
                 this.display.currentExp.innerHTML = 'Stage '+this.stageCalc(currentExp)[0]+' - '+this.stageCalc(currentExp)[1]
@@ -503,7 +541,12 @@
             RU:[new Date('2021/08/27 09:00:00 UTC+3'),new Date('2021/09/06 09:00:00  UTC+3')]
             },
             expSum:[3000,9000,18000,36000,66000,98000,131000,166000,209000,262000],
-            mode:'marathon'
+            mode:'marathon',
+            price:{
+                CNY:[606,'¥'],
+                USD:[90,'$'],
+                EURO:[80,'€']
+            }
         }
     }
     var battlepass={
@@ -525,7 +568,7 @@
             document.querySelector('.warning').children[0].innerHTML=''
             //check if the event is ongoing
             if(timer.ongoing()[0] == 2){
-                document.querySelector('.output.battlepass').style.display = 'block'
+                document.querySelector('.output.battlepass').style.display = 'flex'
                 let currentDate = timer.dateCurrent;
                 let targetPoint = Math.floor(this.totalPoint*timer.timeProgress());
                 let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
