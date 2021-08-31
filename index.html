@@ -84,15 +84,6 @@
             .navbar li:hover::before {
                 background-color: rgba(0,0,0,0);
             }
-            #btn-bp4{
-                background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_4_615x346.jpg");
-            }
-            #btn-bp5{
-                background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg");
-            }
-            #btn-strvk{
-                background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg");
-            }
             /* end of navbar */
             .container{
                 position: fixed;
@@ -313,10 +304,10 @@
 <body>
     <div class="navbar">
         <div class="logo-s"></div>
-        <ul>
+        <ul class="btn-list">
             <!-- <li id="btn-bp4"><p>battlepass IV</p></li> -->
-            <li id="btn-bp5"><p>battlepass V</p></li>
-            <li id="btn-strvk">Strv K Marathon</li>
+            <!-- <li id="btn-bp5" class="nav-btn" data-target="battlepass5"><p>battlepass V</p></li>
+            <li id="btn-strvk" class="nav-btn" data-target='strvkMarathon'>Strv K Marathon</li> -->
         </ul>
     </div>
     <div class="container">
@@ -406,8 +397,10 @@
         <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
     </div>
 <script>
+    // constructor for different types of event
     function Marathon(eventSetting){
         this.eventSetting = eventSetting
+        this.timer = timer(this.eventSetting)
         this.discountDisplay=[.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
         this.display={
             currentExp:document.querySelector('.marathon .current-exp-num').children[1],
@@ -449,8 +442,7 @@
             }
         },
         this.update = ()=>{
-            let time = timer(this.eventSetting)
-            time.timeUpdate()
+            this.timer.timeUpdate()
             document.title = this.eventSetting.title
             document.querySelector('.title').innerHTML = this.eventSetting.title
             document.querySelectorAll('.output').forEach(el=>{
@@ -462,24 +454,24 @@
                 if (this.controller.showDiscount.value == 0) {
                     item.children[0].innerHTML='-'+this.discountDisplay[i]*100+'%'
                 }else{
-                    item.children[0].innerHTML=this.eventSetting.price[this.controller.showDiscount.value][1]+Math.floor((1-this.discountDisplay[i])*this.eventSetting.price[this.controller.showDiscount.value][0])
+                    item.children[0].innerHTML=this.eventSetting.price[this.controller.showDiscount.value][1]+Math.floor((1-this.discountDisplay[i])*this.eventSetting.price[this.controller.showDiscount.value][0]*100)/100
                 }
                 item.classList.remove('last')
             })
             //update times in the info section
-            let dateStart = time.timeParse('start')
-            let dateEnd = time.timeParse('end')
-            let dateCurrent = time.timeParse('current')
+            let dateStart = this.timer.timeParse('start')
+            let dateEnd = this.timer.timeParse('end')
+            let dateCurrent = this.timer.timeParse('current')
             this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
             this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
             this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
-            if(time.ongoing()[0] == 2){
+            if(this.timer.ongoing()[0] == 2){
                 document.querySelector('.output.marathon').style.display = 'flex'
                 //calculate where player should be at
                 let targetDiscount = this.controller.targetDiscountSlider.value
                 let targetSum = this.eventSetting.expSum[targetDiscount-1]
-                let targetExp = Math.ceil(targetSum*time.timeProgress())
+                let targetExp = Math.ceil(targetSum*this.timer.timeProgress())
                 if(targetExp <= this.eventSetting.expSum[9]){
                     this.display.targetExp.innerHTML ='Stage '+this.stageCalc(targetExp)[0]+' - '+this.stageCalc(targetExp)[1]
                 }
@@ -487,7 +479,7 @@
                     this.display.targetExp.innerHTML ='Stage 10 - 250,000'
                 }
                 //update progress bar
-                this.display.progressBar.children[0].style.width = time.timeProgress()*100+'%'
+                this.display.progressBar.children[0].style.width = this.timer.timeProgress()*100+'%'
                 for(var i=1;i<=10;i++){
                     this.display.progressBar.children[i].style.display = 'none'
                     if(i<=targetDiscount){
@@ -500,7 +492,7 @@
                 let currentExp = this.controller.currentExpSlider.value*200
                 this.display.currentExp.innerHTML = 'Stage '+this.stageCalc(currentExp)[0]+' - '+this.stageCalc(currentExp)[1]
                 //update daily average
-                let dailyExp = Math.ceil((targetSum-currentExp)/((time.timeTotal()-time.timePassed())/1000/60/60/24))
+                let dailyExp = Math.ceil((targetSum-currentExp)/((this.timer.timeTotal()-this.timer.timePassed())/1000/60/60/24))
                 if(dailyExp<=0){
                     this.display.dailyAverage.innerHTML = 0
                 }
@@ -510,7 +502,7 @@
             }
             else{
                 document.querySelector('.output').style.display = 'none'
-                document.querySelector('.warning').children[0].innerHTML = time.ongoing()[1]
+                document.querySelector('.warning').children[0].innerHTML = this.timer.ongoing()[1]
             }
         }
     }
@@ -536,7 +528,6 @@
             if(this.timer.ongoing()[0] == 2){
                 document.querySelector('.output.battlepass').style.display = 'flex'
                 let targetPoint = Math.floor(eventSetting.totalPoint*this.timer.timeProgress());
-                console.log(targetPoint)
                 let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
                 let input = parseInt(this.display.currentPoint.value)
                 //custom progression
@@ -558,46 +549,7 @@
             }
         }
     }
-    var eventSetting={
-        battlepass4:{
-            title:'battlepass season IV calculator',
-            timespan:{
-            ASIA:[new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/22 02:00:00  UTC+8')],
-            US:[new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/22 00:30:00  UTC-8')],
-            EU:[new Date('2021/03/15 04:00:00 UTC+2'),new Date('2021/06/23 02:30:00  UTC+2')],
-            RU:[new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/23 03:30:00  UTC+3')]
-            },
-            totalPoint:7500,
-            mode:'battlepass'
-        },
-        battlepass5:{
-            title:'battlepass season V calculator',
-            timespan:{
-            ASIA:[new Date('2021/06/22 05:00:00 UTC+8'),new Date('2021/09/06 06:00:00  UTC+8')],
-            US:[new Date('2021/06/22 04:00:00 UTC-7'),new Date('2021/09/06 03:30:00  UTC-7')],
-            EU:[new Date('2021/06/23 08:30:00 UTC+2'),new Date('2021/09/06 06:30:00  UTC+2')],
-            RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
-            },
-            totalPoint:7500,
-            mode:'battlepass'
-        },
-        strvkMarathon:{
-            title:'Strv K Marathon calculator',
-            timespan:{
-            ASIA:[new Date('2021/08/27 09:00:00 UTC+8'),new Date('2021/09/06 09:00:00  UTC+8')],
-            US:[new Date('2021/08/27 06:00:00 UTC-7'),new Date('2021/09/06 01:00:00  UTC-7')],
-            EU:[new Date('2021/08/27 10:00:00 UTC+2'),new Date('2021/09/06 10:00:00  UTC+2')],
-            RU:[new Date('2021/08/27 09:00:00 UTC+3'),new Date('2021/09/06 09:00:00  UTC+3')]
-            },
-            expSum:[3000,9000,18000,36000,66000,98000,131000,166000,209000,262000],
-            mode:'marathon',
-            price:{
-                CNY:[606,'¥'],
-                USD:[91.07,'$'],
-                EURO:[75.67,'€']
-            }
-        }
-    }
+    // time calculation related functions
     var timer = function(eventSetting){
         ongoing = function(server=this.server()){
             let dateStart = eventSetting.timespan[server][0]
@@ -612,7 +564,6 @@
                 let hour = parseInt(countdown/3600)%24
                 let minute = parseInt(countdown/60)%60
                 let second = countdown%60
-                console.log(dateCurrent,dateStart)
                 return [1,'Event will start in '+day+':'+hour+':'+minute+':'+second]
             }
             else{
@@ -678,16 +629,68 @@
             timeParse:timeParse,
         }
     }
+    // event data input
+    var eventSetting={
+        // legacy data
+        // battlepass4:{
+        //     title:'battlepass season IV calculator',
+        //     timespan:{
+        //     ASIA:[new Date('2021/03/15 06:00:00 UTC+8'),new Date('2021/06/22 02:00:00  UTC+8')],
+        //     US:[new Date('2021/03/15 04:00:00 UTC-8'),new Date('2021/06/22 00:30:00  UTC-8')],
+        //     EU:[new Date('2021/03/15 04:00:00 UTC+2'),new Date('2021/06/23 02:30:00  UTC+2')],
+        //     RU:[new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/23 03:30:00  UTC+3')]
+        //     },
+        //     totalPoint:7500,
+        //     mode:Battlepass
+        // },
+        battlepass5:{
+            title:'battlepass season V calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg")',
+            timespan:{
+            ASIA:[new Date('2021/06/22 05:00:00 UTC+8'),new Date('2021/09/06 06:00:00  UTC+8')],
+            US:[new Date('2021/06/22 04:00:00 UTC-7'),new Date('2021/09/06 03:30:00  UTC-7')],
+            EU:[new Date('2021/06/23 08:30:00 UTC+2'),new Date('2021/09/06 06:30:00  UTC+2')],
+            RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
+            },
+            totalPoint:7500,
+            mode:Battlepass
+        },
+        strvkMarathon:{
+            title:'Strv K Marathon calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg")',
+            timespan:{
+            ASIA:[new Date('2021/08/27 09:00:00 UTC+8'),new Date('2021/09/06 09:00:00  UTC+8')],
+            US:[new Date('2021/08/27 06:00:00 UTC-7'),new Date('2021/09/06 01:00:00  UTC-7')],
+            EU:[new Date('2021/08/27 10:00:00 UTC+2'),new Date('2021/09/06 10:00:00  UTC+2')],
+            RU:[new Date('2021/08/27 09:00:00 UTC+3'),new Date('2021/09/06 09:00:00  UTC+3')]
+            },
+            expSum:[3000,9000,18000,36000,66000,98000,131000,166000,209000,262000],
+            price:{
+                CNY:[606,'¥'],
+                USD:[91.07,'$'],
+                EURO:[75.67,'€']
+            },
+            mode:Marathon
+        }
+    }
+    // create object and nav-btn from each eventSetting entry
     var obj = {}
-    obj.battlepass5 = new Battlepass(eventSetting.battlepass5)
-    obj.strvkMarathon = new Marathon(eventSetting.strvkMarathon)
-    document.querySelector('#btn-bp5').onclick = function(){
-        chosenMode = 'battlepass5'
-    }
-    document.querySelector('#btn-strvk').onclick = function(){
-        chosenMode = 'strvkMarathon'
-    }
+    Object.entries(eventSetting).forEach((data)=>{
+        obj[data[0]] = new data[1].mode(data[1])
+        // generate button
+        var btn = document.createElement('li')
+        btn.id = 'btn-'+data[0]
+        btn.classList.add('nav-btn')
+        btn.style.background = data[1].thumbnail
+        btn.innerHTML = data[1].title
+        btn.addEventListener('click',function(){
+            chosenMode = data[0]
+        })
+        document.querySelector('.btn-list').append(btn)
+    })
+    // default setting
     var chosenMode = 'battlepass5'
+    // UI update loop
     var loop = setInterval(()=>{
         obj[chosenMode].update()
     },100)
