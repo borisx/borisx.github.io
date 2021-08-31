@@ -673,26 +673,34 @@
             mode:Marathon
         }
     }
-    // create object and nav-btn from each eventSetting entry
-    var obj = {}
-    Object.entries(eventSetting).forEach((data)=>{
-        obj[data[0]] = new data[1].mode(data[1])
-        // generate button
-        var btn = document.createElement('li')
-        btn.id = 'btn-'+data[0]
-        btn.classList.add('nav-btn')
-        btn.style.background = data[1].thumbnail
-        btn.innerHTML = data[1].title
-        btn.addEventListener('click',function(){
-            chosenMode = data[0]
+    // startup function
+    function init(){
+        // clear out navbar buttons
+        document.querySelector('.btn-list').innerHTML = ''
+        // initialize obj
+        window.obj = {}
+        // create object and nav-btn from each eventSetting entry
+        Object.entries(eventSetting).forEach((data)=>{
+            obj[data[0]] = new data[1].mode(data[1])
+            // generate new buttons
+            var btn = document.createElement('li')
+            btn.id = 'btn-'+data[0]
+            btn.classList.add('nav-btn')
+            btn.style.background = data[1].thumbnail
+            btn.innerHTML = data[1].title
+            btn.addEventListener('click',function(){
+                chosenMode = data[0]
+            })
+            document.querySelector('.btn-list').append(btn)
         })
-        document.querySelector('.btn-list').append(btn)
-    })
-    // default setting
-    var chosenMode = 'battlepass5'
-    // UI update loop
-    var loop = setInterval(()=>{
-        obj[chosenMode].update()
-    },100)
+        // default setting
+        var chosenMode = 'battlepass5'
+        // UI update loop
+        clearInterval(window.loop)
+        window.loop = setInterval(()=>{
+            obj[chosenMode].update()
+        },100)
+    }
+    document.addEventListener("DOMContentLoaded", init())
 </script>
 </body></html>
