@@ -91,7 +91,7 @@
                 background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg");
             }
             #btn-strvk{
-                background-image: url("//sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg");
+                background: url("http://sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg");
             }
             /* end of navbar */
             .container{
@@ -406,9 +406,10 @@
         <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
     </div>
 <script>
-    var marathon={
-        discountDisplay:[.1,.2,.3,.4,.5,.6,.7,.8,.9,1],
-        display:{
+    function Marathon(eventSetting){
+        this.eventSetting = eventSetting
+        this.discountDisplay=[.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
+        this.display={
             currentExp:document.querySelector('.marathon .current-exp-num').children[1],
             targetExp:document.querySelector('.marathon .target-exp').children[1],
             dailyAverage:document.querySelector('.marathon .daily-average').children[1],
@@ -418,12 +419,12 @@
             progressBar:document.querySelector('.marathon .progress-bar'),
             seperator:document.querySelectorAll('.seperator')
         },
-        controller:{
+        this.controller={
             targetDiscountSlider:document.querySelector('#targetDiscountSlider'),
             currentExpSlider:document.querySelector('#currentExpSlider'),
             showDiscount:document.querySelector('#showDiscount')
         },
-        stageCalc:function(input){
+        this.stageCalc = (input)=>{
             let stage
             let stageExp
             for(var i=0;i<this.eventSetting.expSum.length;i++){
@@ -447,7 +448,9 @@
                 }
             }
         },
-        update:function(){
+        this.update = ()=>{
+            let time = timer(this.eventSetting)
+            time.timeUpdate()
             document.title = this.eventSetting.title
             document.querySelector('.title').innerHTML = this.eventSetting.title
             document.querySelectorAll('.output').forEach(el=>{
@@ -464,19 +467,19 @@
                 item.classList.remove('last')
             })
             //update times in the info section
-            let dateStart = timer.timeParse('start')
-            let dateEnd = timer.timeParse('end')
-            let dateCurrent = timer.timeParse('current')
+            let dateStart = time.timeParse('start')
+            let dateEnd = time.timeParse('end')
+            let dateCurrent = time.timeParse('current')
             this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
             this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
             this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
-            if(timer.ongoing()[0] == 2){
+            if(time.ongoing()[0] == 2){
                 document.querySelector('.output.marathon').style.display = 'flex'
                 //calculate where player should be at
                 let targetDiscount = this.controller.targetDiscountSlider.value
                 let targetSum = this.eventSetting.expSum[targetDiscount-1]
-                let targetExp = Math.ceil(targetSum*timer.timeProgress())
+                let targetExp = Math.ceil(targetSum*time.timeProgress())
                 if(targetExp <= this.eventSetting.expSum[9]){
                     this.display.targetExp.innerHTML ='Stage '+this.stageCalc(targetExp)[0]+' - '+this.stageCalc(targetExp)[1]
                 }
@@ -484,7 +487,7 @@
                     this.display.targetExp.innerHTML ='Stage 10 - 250,000'
                 }
                 //update progress bar
-                this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%'
+                this.display.progressBar.children[0].style.width = time.timeProgress()*100+'%'
                 for(var i=1;i<=10;i++){
                     this.display.progressBar.children[i].style.display = 'none'
                     if(i<=targetDiscount){
@@ -497,7 +500,7 @@
                 let currentExp = this.controller.currentExpSlider.value*200
                 this.display.currentExp.innerHTML = 'Stage '+this.stageCalc(currentExp)[0]+' - '+this.stageCalc(currentExp)[1]
                 //update daily average
-                let dailyExp = Math.ceil((targetSum-currentExp)/((timer.timeTotal()-timer.timePassed())/1000/60/60/24))
+                let dailyExp = Math.ceil((targetSum-currentExp)/((time.timeTotal()-time.timePassed())/1000/60/60/24))
                 if(dailyExp<=0){
                     this.display.dailyAverage.innerHTML = 0
                 }
@@ -507,7 +510,51 @@
             }
             else{
                 document.querySelector('.output').style.display = 'none'
-                document.querySelector('.warning').children[0].innerHTML = timer.ongoing()[1]
+                document.querySelector('.warning').children[0].innerHTML = time.ongoing()[1]
+            }
+        }
+    }
+    function Battlepass(eventSetting){
+        this.eventSetting = eventSetting
+        this.timer = timer(this.eventSetting)
+        this.display={
+            // targetPoint:document.querySelector('.battlepass .target-point').children[1],
+            targetLevel:document.querySelector('.battlepass .target-lv').children[1],
+            currentPoint:document.querySelector('.battlepass .current-point').children[1],
+            dailyAverage:document.querySelector('.battlepass .daily-average').children[1],
+            progressBar:document.querySelector('.battlepass .progress-bar')
+        },
+        this.update=()=>{
+            this.timer.timeUpdate()
+            document.title = this.eventSetting.title
+            document.querySelector('.title').innerHTML = this.eventSetting.title
+            document.querySelectorAll('.output').forEach(el=>{
+                el.style.display = 'none'
+            })
+            document.querySelector('.warning').children[0].innerHTML=''
+            //check if the event is ongoing
+            if(this.timer.ongoing()[0] == 2){
+                document.querySelector('.output.battlepass').style.display = 'flex'
+                let targetPoint = Math.floor(eventSetting.totalPoint*this.timer.timeProgress());
+                console.log(targetPoint)
+                let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
+                let input = parseInt(this.display.currentPoint.value)
+                //custom progression
+                let currentPoint;
+                if (isNaN(input) || input == 0) {
+                    currentPoint = targetPoint
+                }else{
+                    currentPoint = input
+                };
+                let average = Math.ceil((eventSetting.totalPoint - currentPoint)/(this.timer.timeRemaining()/86400000));
+                this.display.progressBar.children[0].style.width = this.timer.timeProgress()*100+'%';
+                // this.display.targetPoint.innerHTML = targetPoint;
+                this.display.targetLevel.innerHTML = 'stage '+targetLevel[0]+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
+                this.display.dailyAverage.innerHTML = average+'<lower>pt.</lower>';
+            }
+            else{
+                document.querySelector('.output').style.display = 'none'
+                document.querySelector('.warning').children[0].innerHTML = this.timer.ongoing()[1]
             }
         }
     }
@@ -520,6 +567,7 @@
             EU:[new Date('2021/03/15 04:00:00 UTC+2'),new Date('2021/06/23 02:30:00  UTC+2')],
             RU:[new Date('2021/03/15 04:00:00 UTC+3'),new Date('2021/06/23 03:30:00  UTC+3')]
             },
+            totalPoint:7500,
             mode:'battlepass'
         },
         battlepass5:{
@@ -530,6 +578,7 @@
             EU:[new Date('2021/06/23 08:30:00 UTC+2'),new Date('2021/09/06 06:30:00  UTC+2')],
             RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
             },
+            totalPoint:7500,
             mode:'battlepass'
         },
         strvkMarathon:{
@@ -545,57 +594,14 @@
             price:{
                 CNY:[606,'¥'],
                 USD:[90,'$'],
-                EURO:[80,'€']
+                EURO:[75.67,'€']
             }
         }
     }
-    var battlepass={
-        title:"battlepass calculator",
-        totalPoint:7500,
-        display:{
-            // targetPoint:document.querySelector('.battlepass .target-point').children[1],
-            targetLevel:document.querySelector('.battlepass .target-lv').children[1],
-            currentPoint:document.querySelector('.battlepass .current-point').children[1],
-            dailyAverage:document.querySelector('.battlepass .daily-average').children[1],
-            progressBar:document.querySelector('.battlepass .progress-bar')
-        },
-        update:function(){
-            document.title = this.title
-            document.querySelector('.title').innerHTML = this.title
-            document.querySelectorAll('.output').forEach(el=>{
-                el.style.display = 'none'
-            })
-            document.querySelector('.warning').children[0].innerHTML=''
-            //check if the event is ongoing
-            if(timer.ongoing()[0] == 2){
-                document.querySelector('.output.battlepass').style.display = 'flex'
-                let currentDate = timer.dateCurrent;
-                let targetPoint = Math.floor(this.totalPoint*timer.timeProgress());
-                let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
-                let input = parseInt(this.display.currentPoint.value)
-                //custom progression
-                let currentPoint;
-                if (isNaN(input) || input == 0) {
-                    currentPoint = targetPoint
-                }else{
-                    currentPoint = input
-                };
-                let average = Math.ceil((this.totalPoint - currentPoint)/(timer.timeRemaining()/86400000));
-                this.display.progressBar.children[0].style.width = timer.timeProgress()*100+'%';
-                // this.display.targetPoint.innerHTML = targetPoint;
-                this.display.targetLevel.innerHTML = 'stage '+targetLevel[0]+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
-                this.display.dailyAverage.innerHTML = average+'<lower>pt.</lower>';
-            }
-            else{
-                document.querySelector('.output').style.display = 'none'
-                document.querySelector('.warning').children[0].innerHTML = timer.ongoing()[1]
-            }
-        }
-    }
-    var timer={
-        ongoing:function(server=this.server()){
-            let dateStart = this.timespan[server][0]
-            let dateEnd = this.timespan[server][1]
+    var timer = function(eventSetting){
+        ongoing = function(server=this.server()){
+            let dateStart = eventSetting.timespan[server][0]
+            let dateEnd = eventSetting.timespan[server][1]
             let dateCurrent = this.timeCurrent()
             if(dateCurrent>dateEnd){
                 return [0,'Event has ended!']
@@ -612,45 +618,45 @@
             else{
                 return [2]
             }
-        },
-        server:function(){
+        }
+        server = function(){
             return document.querySelector('input[name=server]:checked').value
-        },
-        timeCurrent:function(){
+        }
+        timeCurrent = function(){
             let date =  new Date()
             // add offset for debug use
             // date.setDate(date.getDate() + 2);
             return date;
-        },
-        timeUpdate:function(){
+        }
+        timeUpdate = function(){
             //update times in the info section
-            let dateStart = timer.timeParse('start')
-            let dateEnd = timer.timeParse('end')
-            let dateCurrent = timer.timeParse('current')
+            let dateStart = this.timeParse('start')
+            let dateEnd = this.timeParse('end')
+            let dateCurrent = this.timeParse('current')
             document.querySelector('.info .date-start').innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
             document.querySelector('.info .date-end').innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
             document.querySelector('.info .date-current').innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
         },
-        timeTotal:function(server=this.server()){
-            return this.timespan[server][1] - this.timespan[server][0]
+        timeTotal = function(server=this.server()){
+            return eventSetting.timespan[server][1] - eventSetting.timespan[server][0]
         },
-        timePassed:function(server=this.server()){
-            return this.timeCurrent() - this.timespan[server][0]
+        timePassed = function(server=this.server()){
+            return this.timeCurrent() - eventSetting.timespan[server][0]
         },
-        timeRemaining:function(server=this.server()){
-            return this.timespan[server][1] - this.timeCurrent()
+        timeRemaining = function(server=this.server()){
+            return eventSetting.timespan[server][1] - this.timeCurrent()
         },
-        timeProgress:function(server=this.server()){
+        timeProgress = function(server=this.server()){
             return this.timePassed(server) / this.timeTotal(server)
         },
-        timeParse:function(i){
+        timeParse = function(i){
             let time
             switch (i) {
                 case 'start':
-                    time = this.timespan[this.server()][0]
+                    time = eventSetting.timespan[this.server()][0]
                     break;
                 case 'end':
-                    time = this.timespan[this.server()][1]
+                    time = eventSetting.timespan[this.server()][1]
                     break;
                 case 'current':
                     time = this.timeCurrent()
@@ -660,34 +666,30 @@
             }
             return [time.getFullYear(),time.getMonth()+1,time.getDate(),time.getHours(),time.getMinutes(),time.getSeconds(),time.getTimezoneOffset()/-60]
         }
+        return{
+            ongoing:ongoing,
+            server:server,
+            timeCurrent:timeCurrent,
+            timeUpdate:timeUpdate,
+            timeTotal:timeTotal,
+            timePassed:timePassed,
+            timeRemaining,timeRemaining,
+            timeProgress:timeProgress,
+            timeParse:timeParse,
+        }
     }
-    var changeMode = function(event){
-        console.log(event,event.mode)
-        timer.timespan=event.timespan
-        window[event.mode].eventSetting=event
-        timer.mode=window[event.mode]
-    }
-    var update = function(){
-        timer.mode.update()
-        timer.timeUpdate()
-    }
-    changeMode(eventSetting.battlepass5)
+    var obj = {}
+    obj.battlepass5 = new Battlepass(eventSetting.battlepass5)
+    obj.strvkMarathon = new Marathon(eventSetting.strvkMarathon)
     document.querySelector('#btn-bp5').onclick = function(){
-        changeMode(eventSetting.battlepass5)
-        update()
+        chosenMode = 'battlepass5'
     }
     document.querySelector('#btn-strvk').onclick = function(){
-        changeMode(eventSetting.strvkMarathon)
-        update()
+        chosenMode = 'strvkMarathon'
     }
-    document.querySelector('#targetDiscountSlider').onchange = function(){
-        update()
-    }
-    document.querySelector('#currentExpSlider').onchange = function(){
-        update()
-    }
+    var chosenMode = 'battlepass5'
     var loop = setInterval(()=>{
-        update()
+        obj[chosenMode].update()
     },100)
 </script>
 </body></html>
