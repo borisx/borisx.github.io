@@ -559,7 +559,7 @@
                 return [0,'Event has ended!']
             }
             else if(dateCurrent<dateStart){
-                let countdown = parseInt(timer.timePassed()/-1000)
+                let countdown = parseInt(this.timePassed()/-1000)
                 let day = parseInt(countdown/86400)
                 let hour = parseInt(countdown/3600)%24
                 let minute = parseInt(countdown/60)%60
@@ -671,6 +671,18 @@
                 EURO:[75.67,'€']
             },
             mode:Marathon
+        },
+        battlepass6:{
+            title:'battlepass season VI calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_6_615x346.jpg")',
+            timespan:{
+            ASIA:[new Date('2021/09/06 06:00:00 UTC+8'),new Date('2021/12/07 02:00:00  UTC+8')],
+            US:[new Date('2021/09/06 03:00:00 UTC-7'),new Date('2021/12/06 23:00:00  UTC-8')],
+            EU:[new Date('2021/09/06 07:00:00 UTC+2'),new Date('2021/12/08 01:30:00  UTC+1')],
+            RU:[new Date('2021/09/06 07:00:00 UTC+3'),new Date('2021/12/08 03:30:00  UTC+3')]
+            },
+            totalPoint:7500,
+            mode:Battlepass
         }
     }
     // startup function
