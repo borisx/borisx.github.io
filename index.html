@@ -643,35 +643,35 @@
         //     totalPoint:7500,
         //     mode:Battlepass
         // },
-        battlepass5:{
-            title:'battlepass season V calculator',
-            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg")',
-            timespan:{
-            ASIA:[new Date('2021/06/22 05:00:00 UTC+8'),new Date('2021/09/06 06:00:00  UTC+8')],
-            US:[new Date('2021/06/22 04:00:00 UTC-7'),new Date('2021/09/06 03:30:00  UTC-7')],
-            EU:[new Date('2021/06/23 08:30:00 UTC+2'),new Date('2021/09/06 06:30:00  UTC+2')],
-            RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
-            },
-            totalPoint:7500,
-            mode:Battlepass
-        },
-        strvkMarathon:{
-            title:'Strv K Marathon calculator',
-            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg")',
-            timespan:{
-            ASIA:[new Date('2021/08/27 09:00:00 UTC+8'),new Date('2021/09/06 09:00:00  UTC+8')],
-            US:[new Date('2021/08/27 06:00:00 UTC-7'),new Date('2021/09/06 01:00:00  UTC-7')],
-            EU:[new Date('2021/08/27 10:00:00 UTC+2'),new Date('2021/09/06 10:00:00  UTC+2')],
-            RU:[new Date('2021/08/27 09:00:00 UTC+3'),new Date('2021/09/06 09:00:00  UTC+3')]
-            },
-            expSum:[3000,9000,18000,36000,66000,98000,131000,166000,209000,262000],
-            price:{
-                CNY:[606,'¥'],
-                USD:[91.07,'$'],
-                EURO:[75.67,'€']
-            },
-            mode:Marathon
-        },
+        // battlepass5:{
+        //     title:'battlepass season V calculator',
+        //     thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_5_615x346.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2021/06/22 05:00:00 UTC+8'),new Date('2021/09/06 06:00:00  UTC+8')],
+        //     US:[new Date('2021/06/22 04:00:00 UTC-7'),new Date('2021/09/06 03:30:00  UTC-7')],
+        //     EU:[new Date('2021/06/23 08:30:00 UTC+2'),new Date('2021/09/06 06:30:00  UTC+2')],
+        //     RU:[new Date('2021/06/23 11:30:00 UTC+3'),new Date('2021/09/06 06:30:00  UTC+3')]
+        //     },
+        //     totalPoint:7500,
+        //     mode:Battlepass
+        // },
+        // strvkMarathon:{
+        //     title:'Strv K Marathon calculator',
+        //     thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/sabaton_615x346_xyxd85s.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2021/08/27 09:00:00 UTC+8'),new Date('2021/09/06 09:00:00  UTC+8')],
+        //     US:[new Date('2021/08/27 06:00:00 UTC-7'),new Date('2021/09/06 01:00:00  UTC-7')],
+        //     EU:[new Date('2021/08/27 10:00:00 UTC+2'),new Date('2021/09/06 10:00:00  UTC+2')],
+        //     RU:[new Date('2021/08/27 09:00:00 UTC+3'),new Date('2021/09/06 09:00:00  UTC+3')]
+        //     },
+        //     expSum:[3000,9000,18000,36000,66000,98000,131000,166000,209000,262000],
+        //     price:{
+        //         CNY:[606,'¥'],
+        //         USD:[91.07,'$'],
+        //         EURO:[75.67,'€']
+        //     },
+        //     mode:Marathon
+        // },
         battlepass6:{
             title:'battlepass season VI calculator',
             thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_6_615x346.jpg")',
@@ -706,7 +706,7 @@
             document.querySelector('.btn-list').append(btn)
         })
         // default setting
-        var chosenMode = 'battlepass5'
+        var chosenMode = Object.entries(eventSetting)[0][0]
         // UI update loop
         clearInterval(window.loop)
         window.loop = setInterval(()=>{
