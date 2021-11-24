@@ -364,11 +364,11 @@
             </div>
             <div class="show-discount">
                 <h3>Show discount in: </h3>
-                <select id="showDiscount" value="1">
+                <select id="showDiscount" value="0">
                     <option value="0">percentage</option>
-                    <option value="CNY">CNY</option>
+                    <!-- <option value="CNY">CNY</option>
                     <option value="USD">USD</option>
-                    <option value="EURO">EURO</option>
+                    <option value="EURO">EURO</option> -->
                 </select>
             </div>
             <div class="slider-container">
@@ -683,7 +683,24 @@
             },
             totalPoint:7500,
             mode:Battlepass
-        }
+        },
+        altProtoMarathon:{
+            title:'AltProto AMX 30 Marathon calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/thumb_615x346_winter_marathon.jpg")',
+            timespan:{
+            ASIA:[new Date('2021/11/26 09:00:00 UTC+8'),new Date('2021/12/06 09:00:00  UTC+8')],
+            US:[new Date('2021/11/26 00:00:00 UTC-8'),new Date('2021/12/06 00:00:00  UTC-8')],
+            EU:[new Date('2021/11/26 09:00:00 UTC+1'),new Date('2021/12/06 09:00:00  UTC+1')],
+            RU:[new Date('2021/11/26 09:00:00 UTC+3'),new Date('2021/12/06 09:00:00  UTC+3')]
+            },
+            expSum:[3000,8000,17000,34000,62000,92000,124000,160000,200000,250000],
+            price:{
+                CNY:[606,'¥'],
+                USD:[91.07,'$'],
+                EURO:[75.67,'€']
+            },
+            mode:Marathon
+        },
     }
     // startup function
     function init(){
@@ -706,7 +723,7 @@
             document.querySelector('.btn-list').append(btn)
         })
         // default setting
-        var chosenMode = Object.entries(eventSetting)[0][0]
+        var chosenMode = 'altProtoMarathon'
         // UI update loop
         clearInterval(window.loop)
         window.loop = setInterval(()=>{
