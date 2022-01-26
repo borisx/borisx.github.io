@@ -684,23 +684,40 @@
             totalPoint:7500,
             mode:Battlepass
         },
-        altProtoMarathon:{
-            title:'AltProto AMX 30 Marathon calculator',
-            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/thumb_615x346_winter_marathon.jpg")',
+        // altProtoMarathon:{
+        //     title:'AltProto AMX 30 Marathon calculator',
+        //     thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/thumb_615x346_winter_marathon.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2021/11/26 09:00:00 UTC+8'),new Date('2021/12/06 09:00:00  UTC+8')],
+        //     US:[new Date('2021/11/26 00:00:00 UTC-8'),new Date('2021/12/06 00:00:00  UTC-8')],
+        //     EU:[new Date('2021/11/26 09:00:00 UTC+1'),new Date('2021/12/06 09:00:00  UTC+1')],
+        //     RU:[new Date('2021/11/26 09:00:00 UTC+3'),new Date('2021/12/06 09:00:00  UTC+3')]
+        //     },
+        //     expSum:[3000,8000,17000,34000,62000,92000,124000,160000,200000,250000],
+        //     price:{
+        //         CNY:[606,'¥'],
+        //         USD:[91.07,'$'],
+        //         EURO:[75.67,'€']
+        //     },
+        //     mode:Marathon
+        // },
+        WZ114Marathon:{
+            title:'WZ-114 Marathon calculator',
+            thumbnail:'url("http:////sg-wotp.wgcdn.co/dcont/fb/image/microsoftteams-image_%284%29_4Ns9STt.png")',
             timespan:{
-            ASIA:[new Date('2021/11/26 09:00:00 UTC+8'),new Date('2021/12/06 09:00:00  UTC+8')],
-            US:[new Date('2021/11/26 00:00:00 UTC-8'),new Date('2021/12/06 00:00:00  UTC-8')],
-            EU:[new Date('2021/11/26 09:00:00 UTC+1'),new Date('2021/12/06 09:00:00  UTC+1')],
-            RU:[new Date('2021/11/26 09:00:00 UTC+3'),new Date('2021/12/06 09:00:00  UTC+3')]
+            ASIA:[new Date('2022/01/28 09:00:00 UTC+8'),new Date('2022/02/07 09:00:00  UTC+8')],
+            US:[new Date('2022/01/28 06:00:00 UTC-8'),new Date('2022/02/07 06:00:00  UTC-8')],
+            EU:[new Date('2022/01/28 09:00:00 UTC+1'),new Date('2021/02/07 10:00:00  UTC+1')],
+            RU:[new Date('2022/01/28 09:00:00 UTC+3'),new Date('2021/02/07 09:00:00  UTC+3')]
             },
-            expSum:[3000,8000,17000,34000,62000,92000,124000,160000,200000,250000],
+            expSum:[3000,9000,19000,37000,67000,99000,132000,168000,211000,264000],
             price:{
                 CNY:[606,'¥'],
                 USD:[91.07,'$'],
                 EURO:[75.67,'€']
             },
             mode:Marathon
-        },
+        }
     }
     // startup function
     function init(){
@@ -723,7 +740,7 @@
             document.querySelector('.btn-list').append(btn)
         })
         // default setting
-        var chosenMode = 'altProtoMarathon'
+        var chosenMode = 'WZ114Marathon'
         // UI update loop
         clearInterval(window.loop)
         window.loop = setInterval(()=>{
