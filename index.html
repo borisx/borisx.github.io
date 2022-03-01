@@ -672,18 +672,18 @@
         //     },
         //     mode:Marathon
         // },
-        battlepass6:{
-            title:'battlepass season VI calculator',
-            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_6_615x346.jpg")',
-            timespan:{
-            ASIA:[new Date('2021/09/06 06:00:00 UTC+8'),new Date('2021/12/07 02:00:00  UTC+8')],
-            US:[new Date('2021/09/06 03:00:00 UTC-7'),new Date('2021/12/06 23:00:00  UTC-8')],
-            EU:[new Date('2021/09/06 07:00:00 UTC+2'),new Date('2021/12/08 01:30:00  UTC+1')],
-            RU:[new Date('2021/09/06 07:00:00 UTC+3'),new Date('2021/12/08 03:30:00  UTC+3')]
-            },
-            totalPoint:7500,
-            mode:Battlepass
-        },
+        // battlepass6:{
+        //     title:'battlepass season VI calculator',
+        //     thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/npi_battle_pass_season_6_615x346.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2021/09/06 06:00:00 UTC+8'),new Date('2021/12/07 02:00:00  UTC+8')],
+        //     US:[new Date('2021/09/06 03:00:00 UTC-7'),new Date('2021/12/06 23:00:00  UTC-8')],
+        //     EU:[new Date('2021/09/06 07:00:00 UTC+2'),new Date('2021/12/08 01:30:00  UTC+1')],
+        //     RU:[new Date('2021/09/06 07:00:00 UTC+3'),new Date('2021/12/08 03:30:00  UTC+3')]
+        //     },
+        //     totalPoint:7500,
+        //     mode:Battlepass
+        // },
         // altProtoMarathon:{
         //     title:'AltProto AMX 30 Marathon calculator',
         //     thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/thumb_615x346_winter_marathon.jpg")',
@@ -701,22 +701,34 @@
         //     },
         //     mode:Marathon
         // },
-        WZ114Marathon:{
-            title:'WZ-114 Marathon calculator',
-            thumbnail:'url("http:////sg-wotp.wgcdn.co/dcont/fb/image/microsoftteams-image_%284%29_4Ns9STt.png")',
+        // WZ114Marathon:{
+        //     title:'WZ-114 Marathon calculator',
+        //     thumbnail:'url("http:////sg-wotp.wgcdn.co/dcont/fb/image/microsoftteams-image_%284%29_4Ns9STt.png")',
+        //     timespan:{
+        //     ASIA:[new Date('2022/01/28 09:00:00 UTC+8'),new Date('2022/02/07 09:00:00  UTC+8')],
+        //     US:[new Date('2022/01/28 06:00:00 UTC-8'),new Date('2022/02/07 06:00:00  UTC-8')],
+        //     EU:[new Date('2022/01/28 09:00:00 UTC+1'),new Date('2021/02/07 10:00:00  UTC+1')],
+        //     RU:[new Date('2022/01/28 09:00:00 UTC+3'),new Date('2021/02/07 09:00:00  UTC+3')]
+        //     },
+        //     expSum:[3000,9000,19000,37000,67000,99000,132000,168000,211000,264000],
+        //     price:{
+        //         CNY:[606,'¥'],
+        //         USD:[91.07,'$'],
+        //         EURO:[75.67,'€']
+        //     },
+        //     mode:Marathon
+        // },
+        battlepass7:{
+            title:'battlepass season VII calculator',
+            thumbnail:'url("https://content-wg.gcdn.co/locdoc/rich-article/bp_s7/img/bg_bp_7_fin_sm2.185c4e.jpg")',
             timespan:{
-            ASIA:[new Date('2022/01/28 09:00:00 UTC+8'),new Date('2022/02/07 09:00:00  UTC+8')],
-            US:[new Date('2022/01/28 06:00:00 UTC-8'),new Date('2022/02/07 06:00:00  UTC-8')],
-            EU:[new Date('2022/01/28 09:00:00 UTC+1'),new Date('2021/02/07 10:00:00  UTC+1')],
-            RU:[new Date('2022/01/28 09:00:00 UTC+3'),new Date('2021/02/07 09:00:00  UTC+3')]
+            ASIA:[new Date('2022/03/01 07:00:00 UTC+8'),new Date('2022/05/30 08:30:00  UTC+8')],
+            US:[new Date('2022/03/01 05:00:00 UTC-7'),new Date('2022/05/29 17:30:00  UTC-8')],
+            EU:[new Date('2022/03/02 07:30:00 UTC+1'),new Date('2022/05/30 02:30:00  UTC+2')],
+            RU:[new Date('2022/03/02 10:30:00 UTC+3'),new Date('2022/05/30 03:30:00  UTC+3')]
             },
-            expSum:[3000,9000,19000,37000,67000,99000,132000,168000,211000,264000],
-            price:{
-                CNY:[606,'¥'],
-                USD:[91.07,'$'],
-                EURO:[75.67,'€']
-            },
-            mode:Marathon
+            totalPoint:7500,
+            mode:Battlepass
         }
     }
     // startup function
@@ -740,7 +752,7 @@
             document.querySelector('.btn-list').append(btn)
         })
         // default setting
-        var chosenMode = 'WZ114Marathon'
+        var chosenMode = 'battlepass7'
         // UI update loop
         clearInterval(window.loop)
         window.loop = setInterval(()=>{
