@@ -718,14 +718,26 @@
         //     },
         //     mode:Marathon
         // },
-        battlepass7:{
-            title:'battlepass season VII calculator',
-            thumbnail:'url("https://content-wg.gcdn.co/locdoc/rich-article/bp_s7/img/bg_bp_7_fin_sm2.185c4e.jpg")',
+        // battlepass7:{
+        //     title:'battlepass season VII calculator',
+        //     thumbnail:'url("https://content-wg.gcdn.co/locdoc/rich-article/bp_s7/img/bg_bp_7_fin_sm2.185c4e.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2022/03/01 07:00:00 UTC+8'),new Date('2022/05/30 08:30:00  UTC+8')],
+        //     US:[new Date('2022/03/01 05:00:00 UTC-7'),new Date('2022/05/29 17:30:00  UTC-8')],
+        //     EU:[new Date('2022/03/02 07:30:00 UTC+1'),new Date('2022/05/30 02:30:00  UTC+2')],
+        //     RU:[new Date('2022/03/02 10:30:00 UTC+3'),new Date('2022/05/30 03:30:00  UTC+3')]
+        //     },
+        //     totalPoint:7500,
+        //     mode:Battlepass
+        // },
+        battlepass8:{
+            title:'battlepass season VIII calculator',
+            thumbnail:'url("https://eu-wotp.wgcdn.co/dcont/fb/image/615x346_corevid-772_battle_pass_s8_teaser.jpg")',
             timespan:{
-            ASIA:[new Date('2022/03/01 07:00:00 UTC+8'),new Date('2022/05/30 08:30:00  UTC+8')],
-            US:[new Date('2022/03/01 05:00:00 UTC-7'),new Date('2022/05/29 17:30:00  UTC-8')],
-            EU:[new Date('2022/03/02 07:30:00 UTC+1'),new Date('2022/05/30 02:30:00  UTC+2')],
-            RU:[new Date('2022/03/02 10:30:00 UTC+3'),new Date('2022/05/30 03:30:00  UTC+3')]
+            ASIA:[new Date('2022/05/31 04:30:00 UTC+8'),new Date('2022/08/30 08:30:00  UTC+8')],
+            US:[new Date('2022/05/31 05:03:00 UTC-8'),new Date('2022/08/30 00:30:00  UTC-8')],
+            EU:[new Date('2022/06/01 07:30:00 UTC+2'),new Date('2022/08/31 02:30:00  UTC+2')],
+            RU:[new Date('2022/06/08 07:00:00 UTC+3'),new Date('2022/08/31 03:30:00  UTC+3')]
             },
             totalPoint:7500,
             mode:Battlepass
@@ -752,7 +764,7 @@
             document.querySelector('.btn-list').append(btn)
         })
         // default setting
-        var chosenMode = 'battlepass7'
+        var chosenMode = 'battlepass8'
         // UI update loop
         clearInterval(window.loop)
         window.loop = setInterval(()=>{
