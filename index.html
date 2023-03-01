@@ -535,7 +535,7 @@
                 let average = Math.ceil((eventData.totalPoint - currentPoint)/(this.timer.timeRemaining()/86400000));
                 this.display.progressBar.children[0].style.width = this.timer.timeProgress()*100+'%';
                 // this.display.targetPoint.innerHTML = targetPoint;
-                this.display.targetLevel.innerHTML ='<lower>chapter</lower> '+Math.floor(targetLevel[0]/50)+' <lower>stage</lower> '+targetLevel[0]%50+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
+                this.display.targetLevel.innerHTML ='<lower>chapter</lower> '+Math.ceil(targetLevel[0]/50)+' <lower>stage</lower> '+targetLevel[0]%50+' + '+targetLevel[1]+'<lower>pt.</lower> ( '+targetPoint+"<lower>pt. total</lower>  )";
                 this.display.dailyAverage.innerHTML = average+'<lower>pt.</lower>';
             }
             else{
@@ -749,16 +749,28 @@
         //    totalPoint:7500,
         //    mode:Battlepass
         //},
-        battlepassT2:{
-            title:'battlepass judgement day calculator',
-            thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/615x346_judgment_day_lore_matters.jpg")',
-            timespan:{
-            ASIA:[new Date('2023/01/12 05:00:00 UTC+8'),new Date('2023/01/26 05:00:00  UTC+8')],
-            US:[new Date('2023/01/12 01:00:00 UTC-8'),new Date('2023/01/26 01:00:00  UTC-8')],
-            EU:[new Date('2023/01/12 05:00:00 UTC+1'),new Date('2023/01/26 05:00:00  UTC+1')]
-            },
-            totalPoint:2500,
-            mode:Battlepass
+        // battlepassT2:{
+        //     title:'battlepass judgement day calculator',
+        //     thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/615x346_judgment_day_lore_matters.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2023/01/12 05:00:00 UTC+8'),new Date('2023/01/26 05:00:00  UTC+8')],
+        //     US:[new Date('2023/01/12 01:00:00 UTC-8'),new Date('2023/01/26 01:00:00  UTC-8')],
+        //     EU:[new Date('2023/01/12 05:00:00 UTC+1'),new Date('2023/01/26 05:00:00  UTC+1')]
+        //     },
+        //     totalPoint:2500,
+        //     mode:Battlepass
+        // },
+        battlepass10:{
+           title:'battlepass season X calculator',
+           thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/battle_pass_s10_615x346.jpg")',
+           timespan:{
+           ASIA:[new Date('2023/02/28 07:00:00 UTC+8'),new Date('2023/05/30 12:00:00  UTC+8')],
+           US:[new Date('2023/02/28 05:00:00 UTC-8'),new Date('2023/05/30 12:00:00  UTC-8')],
+           EU:[new Date('2023/03/01 07:30:00 UTC+1'),new Date('2023/05/31 12:00:00  UTC+1')],
+           RU:[new Date('2023/03/06 15:00:00 UTC+3'),new Date('2023/06/05 06:00:00  UTC+3')]
+           },
+           totalPoint:7500,
+           mode:Battlepass
         }
     }
     // change webpage title
