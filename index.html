@@ -47,6 +47,11 @@
                 <div class="border">
                     <p class="label-point">450</p>
                 </div>
+                <ul class="chapter">
+                    <li class="emblem"></li>
+                    <li class="emblem"></li>
+                    <li class="emblem"></li>
+                </ul>
                 <h1 class="label-stage">50</h1>
                 <div class="label-target">2500</div>
                 
@@ -58,6 +63,7 @@
             <div class="target daily-average">
                 <h2>Daily avg. progression</h2>
                 <h1>2772</h1><span>
+                    
             </div>
         </div>
         <div class="output marathon">
@@ -226,6 +232,7 @@
             previousPoint:document.querySelector('.battlepass .label-point'),
             currentPoint:document.querySelector('.battlepass .current-point').children[1],
             dailyAverage:document.querySelector('.battlepass .daily-average').children[1],
+            chapterStat:document.querySelector('.battlepass .chapter'),
             progressBar:document.querySelector('.battlepass .progress-bar')
         },
         this.update=()=>{
@@ -240,6 +247,16 @@
                 let targetPoint = Math.floor(eventData.totalPoint*this.timer.timeProgress());
                 let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
                 let input = parseInt(this.display.currentPoint.value)
+                // chapter indicator
+                let chapterStat = Math.floor(this.timer.timeProgress()*3)
+                for(var i=0;i<3;i++){
+                    if(i=chapterStat){
+                        this.display.chapterStat.children[i].classList.add('ongoing')
+                    }
+                    else if(i>this.chapterStat){
+                        this.display.chapterStat.children[i].classList.add('inactive')
+                    }
+                }
                 //custom progression
                 let currentPoint;
                 if (isNaN(input) || input == 0) {
@@ -288,7 +305,7 @@
         timeCurrent = function(){
             let date =  new Date()
             // add offset for debug use
-            // date.setDate(date.getDate() + 2);
+            // date.setDate(date.getDate() - 32);
             return date;
         }
         timeUpdate = function(){

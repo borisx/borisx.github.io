@@ -471,4 +471,57 @@ input[type=number] {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
+
+.chapter {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 5%;
+  top: -100;
+}
+
+.emblem {
+  float: left;
+  width: 36px;
+  height: 40px;
+  background: url(https://content-wg.gcdn.co/locdoc/icons-in-tabs/img/bp.6b1d5a.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+}
+
+.emblem.inactive {
+  opacity: .1;
+}
+
+.emblem.ongoing {
+  opacity: .5;
+  -webkit-animation: infinite emblemFlicker 1s;
+          animation: infinite emblemFlicker 1s;
+}
+
+@-webkit-keyframes emblemFlicker {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes emblemFlicker {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
 /*# sourceMappingURL=index.css.map */
