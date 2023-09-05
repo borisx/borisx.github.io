@@ -25,9 +25,9 @@
                 <h2>Select your server:</h2>
                 <div class="server-radio-group">
                     <div class="server-radio"><input id="server1" type="radio" name="server" value="ASIA" checked/><label for="server1">ASIA</label></div>
+                    <div class="server-radio"><input id="server4" type="radio" name="server" value="CN"/><label for="server4">CN</label></div>
                     <div class="server-radio"><input id="server2" type="radio" name="server" value="EU"/><label for="server2">EU</label></div>
                     <div class="server-radio"><input id="server3" type="radio" name="server" value="US"/><label for="server3">US</label></div>
-                    <!-- <div class="server-radio"><input id="server4" type="radio" name="server" value="RU"/><label for="server4">RU</label></div> -->
                 </div>
             </div>
             <div class="detail">
@@ -249,13 +249,17 @@
                 let input = parseInt(this.display.currentPoint.value)
                 // chapter indicator
                 let chapterStat = Math.floor(this.timer.timeProgress()*3)
-                for(var i=0;i<3;i++){
-                    if(i=chapterStat){
-                        this.display.chapterStat.children[i].classList.add('ongoing')
-                    }
-                    else if(i>this.chapterStat){
-                        this.display.chapterStat.children[i].classList.add('inactive')
-                    }
+                if(chapterStat < 1){
+                    this.display.chapterStat.children[0].classList.add('ongoing')
+                    this.display.chapterStat.children[1].classList.add('inactive')
+                    this.display.chapterStat.children[2].classList.add('inactive')
+                }
+                else if(chapterStat < 2){
+                    this.display.chapterStat.children[1].classList.add('ongoing')
+                    this.display.chapterStat.children[2].classList.add('inactive')
+                }
+                else if(chapterStat < 3){
+                    this.display.chapterStat.children[2].classList.add('ongoing')
                 }
                 //custom progression
                 let currentPoint;
@@ -505,14 +509,26 @@
         //    totalPoint:7500,
         //    mode:Battlepass
         // },
-        battlepass11:{
-           title:'battlepass season XI calculator',
-           thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/battle_pass_s11_615x346.jpg")',
+        // battlepass11:{
+        //    title:'battlepass season XI calculator',
+        //    thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/battle_pass_s11_615x346.jpg")',
+        //    timespan:{
+        //    ASIA:[new Date('2023/05/30 08:00:00 UTC+8'),new Date('2023/09/05 02:00:00  UTC+8')],
+        //    US:[new Date('2023/05/30 07:00:00 UTC-8'),new Date('2023/09/05 02:00:00  UTC-8')],
+        //    EU:[new Date('2023/05/31 08:30:00 UTC+2'),new Date('2023/09/06 02:00:00  UTC+2')],
+        //    RU:[new Date('2023/06/07 15:00:00 UTC+3'),new Date('2023/09/12 06:00:00  UTC+3')]
+        //    },
+        //    totalPoint:7500,
+        //    mode:Battlepass
+        // },
+        battlepass12:{
+           title:'battlepass season XII calculator',
+           thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/bp12_background_universal_615x346.jpg")',
            timespan:{
-           ASIA:[new Date('2023/05/30 08:00:00 UTC+8'),new Date('2023/09/05 02:00:00  UTC+8')],
-           US:[new Date('2023/05/30 07:00:00 UTC-8'),new Date('2023/09/05 02:00:00  UTC-8')],
-           EU:[new Date('2023/05/31 08:30:00 UTC+2'),new Date('2023/09/06 02:00:00  UTC+2')],
-           RU:[new Date('2023/06/07 15:00:00 UTC+3'),new Date('2023/09/12 06:00:00  UTC+3')]
+           ASIA:[new Date('2023/09/05 07:00:00 UTC+8'),new Date('2023/11/21 02:00:00  UTC+8')],
+           CN:[new Date('2023/09/06 08:00:00 UTC+8'),new Date('2023/11/21 06:00:00  UTC+8')],
+           US:[new Date('2023/09/06 06:00:00 UTC-8'),new Date('2023/11/22 02:00:00  UTC-8')],
+           EU:[new Date('2023/09/06 08:30:00 UTC+2'),new Date('2023/11/22 02:00:00  UTC+2')],
            },
            totalPoint:7500,
            mode:Battlepass
