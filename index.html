@@ -248,18 +248,24 @@
                 let targetLevel = [Math.ceil(targetPoint/50),targetPoint%50];
                 let input = parseInt(this.display.currentPoint.value)
                 // chapter indicator
-                let chapterStat = Math.floor(this.timer.timeProgress()*3)
-                if(chapterStat < 1){
-                    this.display.chapterStat.children[0].classList.add('ongoing')
-                    this.display.chapterStat.children[1].classList.add('inactive')
-                    this.display.chapterStat.children[2].classList.add('inactive')
+                if(eventData.totalPoint !=7500){
+                    this.display.chapterStat.style.display = 'none'
                 }
-                else if(chapterStat < 2){
-                    this.display.chapterStat.children[1].classList.add('ongoing')
-                    this.display.chapterStat.children[2].classList.add('inactive')
-                }
-                else if(chapterStat < 3){
-                    this.display.chapterStat.children[2].classList.add('ongoing')
+                else{
+                    this.display.chapterStat.style.display = 'block'
+                    let chapterStat = Math.floor(this.timer.timeProgress()*3)
+                    if(chapterStat < 1){
+                        this.display.chapterStat.children[0].classList.add('ongoing')
+                        this.display.chapterStat.children[1].classList.add('inactive')
+                        this.display.chapterStat.children[2].classList.add('inactive')
+                    }
+                    else if(chapterStat < 2){
+                        this.display.chapterStat.children[1].classList.add('ongoing')
+                        this.display.chapterStat.children[2].classList.add('inactive')
+                    }
+                    else if(chapterStat < 3){
+                        this.display.chapterStat.children[2].classList.add('ongoing')
+                    }
                 }
                 //custom progression
                 let currentPoint;
@@ -532,7 +538,19 @@
            },
            totalPoint:7500,
            mode:Battlepass
-        }
+        },
+            battlepassDune:{
+            title:'battlepass distant future calculator',
+            thumbnail:'url("https:////sg-wotp.wgcdn.co/dcont/fb/image/battle_pass_special_chapter_h2p_615x346.jpg")',
+            timespan:{
+            ASIA:[new Date('2023/11/09 08:00:00 UTC+8'),new Date('2023/11/20 08:00:00  UTC+8')],
+            CN:[new Date('2023/11/09 08:00:00 UTC+8'),new Date('2023/11/20 07:59:00  UTC+8')],
+            US:[new Date('2023/11/09 03:00:00 UTC-8'),new Date('2023/11/22 03:00:00  UTC-8')],
+            EU:[new Date('2023/11/09 06:00:00 UTC+1'),new Date('2023/11/20 06:00:00  UTC+1')]
+            },
+            totalPoint:2000,
+            mode:Battlepass
+        },
     }
     // change webpage title
     function setTitle(input){
