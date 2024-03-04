@@ -353,7 +353,7 @@
             output.current = parse(this.timeCurrent())
             let remainingTimeStamp = this.timeRemaining()
             output.remaining = [Math.floor(remainingTimeStamp/86400000),Math.floor(remainingTimeStamp%86400000/3600000),Math.floor(remainingTimeStamp%86400000%3600000/60000),Math.floor(remainingTimeStamp%86400000%3600000%60000/1000)]
-            console.log(output.remaining)
+            // console.log(output.remaining)
             return output
         }
         return{
@@ -552,18 +552,42 @@
         //     totalPoint:2000,
         //     mode:Battlepass
         // },
-        battlepassSnatch:{
-            title:'battlepass snatch calculator',
-            thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/holiday_battle_pass-2_615x346.jpg")',
-            timespan:{
-            ASIA:[new Date('2024/01/11 07:00:00 UTC+8'),new Date('2024/01/25 05:30:00  UTC+8')],
-            CN:[new Date('2024/01/11 04:00:00 UTC+8'),new Date('2024/01/25 02:30:00  UTC+8')],
-            US:[new Date('2024/01/11 03:00:00 UTC-8'),new Date('2024/01/25 01:30:00  UTC-8')],
-            EU:[new Date('2024/01/11 06:00:00 UTC+1'),new Date('2024/01/25 04:30:00  UTC+1')]
-            },
-            totalPoint:2500,
-            mode:Battlepass
-        },
+        // battlepassSnatch:{
+        //     title:'battlepass snatch calculator',
+        //     thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/holiday_battle_pass-2_615x346.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2024/01/11 07:00:00 UTC+8'),new Date('2024/01/25 05:30:00  UTC+8')],
+        //     CN:[new Date('2024/01/11 04:00:00 UTC+8'),new Date('2024/01/25 02:30:00  UTC+8')],
+        //     US:[new Date('2024/01/11 03:00:00 UTC-8'),new Date('2024/01/25 01:30:00  UTC-8')],
+        //     EU:[new Date('2024/01/11 06:00:00 UTC+1'),new Date('2024/01/25 04:30:00  UTC+1')]
+        //     },
+        //     totalPoint:2500,
+        //     mode:Battlepass
+        // },
+        //     battlepassDune2:{
+        //     title:'battlepass distant future part2 calculator',
+        //     thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/holiday_battle_pass_3_615x346.jpg")',
+        //     timespan:{
+        //     ASIA:[new Date('2024/02/15 06:00:00 UTC+8'),new Date('2024/02/26 05:30:00  UTC+8')],
+        //     CN:[new Date('2024/02/15 03:00:00 UTC+8'),new Date('2024/02/26 02:30:00  UTC+8')],
+        //     US:[new Date('2024/02/15 02:00:00 UTC-8'),new Date('2024/02/26 01:30:00  UTC-8')],
+        //     EU:[new Date('2024/02/15 05:00:00 UTC+1'),new Date('2024/02/26 04:30:00  UTC+1')]
+        //     },
+        //     totalPoint:1250,
+        //     mode:Battlepass
+        // }
+        battlepassDune13:{
+           title:'battlepass season XIII calculator',
+           thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/battle_pass_s13_615x346.jpg")',
+           timespan:{
+           ASIA:[new Date('2024/03/05 07:00:00 UTC+8'),new Date('2024/06/04 02:00:00  UTC+8')],
+           CN:[new Date('2024/03/06 08:00:00 UTC+8'),new Date('2024/06/05 06:00:00  UTC+8')],
+           US:[new Date('2024/03/05 06:00:00 UTC-8'),new Date('2024/06/04 02:00:00  UTC-8')],
+           EU:[new Date('2024/03/06 08:30:00 UTC+2'),new Date('2024/06/05 02:00:00  UTC+2')],
+           },
+           totalPoint:7500,
+           mode:Battlepass
+        }
     }
     // change webpage title
     function setTitle(input){
