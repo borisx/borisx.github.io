@@ -69,8 +69,10 @@ h1, h2 {
   list-style: none;
   height: 100%;
   text-align: center;
-  -webkit-transition: background-position .5s;
-  transition: background-position .5s;
+  -webkit-transition-property: background-position;
+  transition-property: background-position;
+  -webkit-transition-duration: .5s;
+          transition-duration: .5s;
   background-size: cover !important;
   background-position: 0 40% !important;
   z-index: 1;
@@ -86,27 +88,26 @@ h1, h2 {
           flex-direction: column;
 }
 
+.navbar li .mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-transition: background-color .5s;
+  transition: background-color .5s;
+  position: absolute;
+  z-index: 2;
+}
+
+.navbar li p {
+  z-index: 3;
+}
+
 .navbar li:hover {
   background-position: 0 20% !important;
 }
 
-.navbar li::before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100px;
-  -webkit-transition: background-color .5s;
-  transition: background-color .5s;
-  background-color: rgba(0, 0, 0, 0.5);
-  height: inherit;
-  z-index: 2;
-}
-
-.navbar li::before:hover {
-  background-color: rgba(0, 0, 0, 0);
+.navbar li:hover .mask {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* end of navbar */

@@ -654,7 +654,7 @@
             btn.id = 'btn-'+event[0]
             btn.classList.add('nav-btn')
             btn.style.background = event[1].thumbnail
-            btn.innerHTML = event[1].title
+            btn.innerHTML = "<div class='mask'></div><p>"+event[1].title+"</p>"
             btn.addEventListener('click',function(){
                 chosenEvent = event[0]
                 setTitle(event[1].title)
