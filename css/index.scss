@@ -94,45 +94,21 @@ $sideMargin:5%;
         height: 15px;
         font-size: 15px;
     }
+    .server-links{
+        display: flex;
+    }
     .server-radio-group{
         border: 2px solid #deb887;
-        display: flex;
+        // display: flex;
         .server-radio{
             position: relative;
             flex-grow: 1;
-            label{
-                display: block;
-                text-align: center;
-                width: 100%;
-                height: 100%;
-                z-index: 2;
-                &::before{
-                    content: '';
-                    background: #deb887;
-                    position: absolute;
-                    width: 0;
-                    height: 100%;
-                    left: 50%;
-                    transition-duration: .3s;
-                    transition-property: width left;
-                    z-index: -1;
-                }
-            }
-            input{
-               position: absolute;
-               width: 0px;
-               height: 0px;
-               &:checked + label{
-                color: #1C1B16;
-                &::before{
-                    left: 0;
-                    top: 0;
-                    margin: 0;
-                    width: 100%;
-                   }
-               } 
-            }
-            
+            color: #deb887;
+            text-decoration: none;
+            &.checked{
+                background-color: #deb887;
+                color: #000;
+            }            
         }
     }
 }

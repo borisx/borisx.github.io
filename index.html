@@ -24,10 +24,18 @@
             <div class="server-selector">
                 <h2>Select your server:</h2>
                 <div class="server-radio-group">
-                    <div class="server-radio"><input id="server1" type="radio" name="server" value="ASIA" checked/><label for="server1">ASIA</label></div>
-                    <div class="server-radio"><input id="server4" type="radio" name="server" value="CN"/><label for="server4">CN</label></div>
-                    <div class="server-radio"><input id="server2" type="radio" name="server" value="EU"/><label for="server2">EU</label></div>
-                    <div class="server-radio"><input id="server3" type="radio" name="server" value="US"/><label for="server3">US</label></div>
+                    <div class="server-links">
+                        <a class="server-radio" name="ASIA" href="?server=ASIA">ASIA</a>
+                        <a class="server-radio" name="CN" href="?server=CN">CN</a>
+                        <a class="server-radio" name="EU" href="?server=EU">EU</a>
+                        <a class="server-radio" name="US" href="?server=US">US</a>
+                    </div>
+                    <form name="serverForm" style="display: none;">
+                        <input id="server1" type="radio" name="server" value="ASIA" checked/><label for="server1">ASIA</label>
+                        <input id="server4" type="radio" name="server" value="CN"/><label for="server4">CN</label>
+                        <input id="server2" type="radio" name="server" value="EU"/><label for="server2">EU</label>
+                        <input id="server3" type="radio" name="server" value="US"/><label for="server3">US</label>
+                    </form>
                 </div>
             </div>
             <div class="detail">
@@ -111,6 +119,7 @@
             </div>
         </div>
         <p style="font-size: 12px;text-align: center; color: rgb(75, 75, 75);">100% not virus lol<br/>I'll keep updating this as long as I'm still playing WOT</p>
+        <p style="font-size: 15px;text-align: center; color: rgb(255, 255, 255);">【update Jun.23】<br/>you can save bookmark with default server setting now</p>
     </div>
     <div class="credit">
         <a href="https://worldoftanks.asia/en/community/accounts/2002340856-BorisX/">BorisX[NRC-A]</a>
@@ -311,7 +320,8 @@
             }
         }
         server = function(){
-            return document.querySelector('input[name=server]:checked').value
+            // return document.querySelector('input[name=server]:checked').value
+            return document.serverForm.server.value
         }
         timeCurrent = function(){
             let date =  new Date()
@@ -602,7 +612,7 @@
         },
         battlepassTankfest:{
            title:'battlepass Tankfest Special calculator',
-           thumbnail:'url("//sg-wotp.wgcdn.co/dcont/fb/image/tankfest_chapter_615x346.jpg")',
+           thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/tankfest_chapter_615x346.jpg")',
            timespan:{
            ASIA:[new Date('2024/06/20 05:45:00 UTC+8'),new Date('2024/07/08 05:00:00  UTC+8')],
            CN:[new Date('2024/06/20 02:45:00 UTC+8'),new Date('2024/07/08 02:00:00  UTC+8')],
@@ -613,13 +623,25 @@
            mode:Battlepass
         }
     }
+    function urlParameter(){
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        console.log(urlParams)
+        if(urlParams.size == 0){
+            window.location = "?server=ASIA"
+        }
+        document.serverForm.server.value = urlParams.get('server')
+        document.querySelector('.server-radio[name="'+urlParams.get('server')+'"]').classList.add('checked')
+    }
     // change webpage title
     function setTitle(input){
-        document.title = input
+        document.title = "【"+document.serverForm.server.value+"】"+input
         document.querySelector('.title').innerHTML = input
     }
     // startup function
     function init(){
+        // read url parameters
+        urlParameter()
         // clear out navbar buttons
         document.querySelector('.btn-list').innerHTML = ''
         // initialize obj
