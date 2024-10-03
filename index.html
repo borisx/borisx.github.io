@@ -134,8 +134,6 @@
             currentExp:document.querySelector('.marathon .current-exp-num').children[1],
             targetExp:document.querySelector('.marathon .target-exp').children[1],
             dailyAverage:document.querySelector('.marathon .daily-average').children[1],
-            dateStart:document.querySelector('.info').children[0],
-            dateEnd:document.querySelector('.info').children[1],
             dateCurrent:document.querySelector('.date-current'),
             progressBar:document.querySelector('.marathon .progress-bar'),
             seperator:document.querySelectorAll('.seperator')
@@ -185,12 +183,12 @@
                 item.classList.remove('last')
             })
             //update times in the info section
-            let dateStart = this.timer.getTimes('start')
-            let dateEnd = this.timer.getTimes('end')
-            let dateCurrent = this.timer.getTimes('current')
-            this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
-            this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
-            this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
+            // let dateStart = this.timer.getTimes('start')
+            // let dateEnd = this.timer.getTimes('end')
+            // let dateCurrent = this.timer.getTimes('current')
+            // this.display.dateStart.innerHTML = 'Start:'+dateStart[0]+'-'+dateStart[1]+'-'+dateStart[2]+' '+dateStart[3]+':00 UTC+'+dateStart[6]
+            // this.display.dateEnd.innerHTML = 'End:'+dateEnd[0]+'-'+dateEnd[1]+'-'+dateEnd[2]+' '+dateEnd[3]+':00 UTC+'+dateEnd[6]
+            // this.display.dateCurrent.innerHTML = 'Current Time:'+dateCurrent[0]+'-'+dateCurrent[1]+'-'+dateCurrent[2]+' '+dateCurrent[3]+':'+dateCurrent[4]+':'+dateCurrent[5]+' UTC+'+dateCurrent[6]
             //check if the event is ongoing
             if(this.timer.ongoing()[0] == 2){
                 document.querySelector('.output.marathon').style.display = 'flex'
@@ -633,7 +631,24 @@
             },
             totalPoint:7500,
             mode:Battlepass
-        }
+        },
+        gromMarathon:{
+            title:'GROM Marathon calculator',
+            thumbnail:'url("https://sg-wotp.wgcdn.co/dcont/fb/image/1022x360_battle-pass-season-15-challenge-redir.jpg")',
+            timespan:{
+            ASIA:[new Date('2024/10/03 07:30:00 UTC+8'),new Date('2024/10/14 07:30:00  UTC+8')],
+            CN:[new Date('2024/10/03 08:30:00 UTC+8'),new Date('2024/10/14 08:31:00  UTC+8')],
+            US:[new Date('2024/10/03 21:30:00 UTC-8'),new Date('2024/10/14 19:00:00  UTC-8')],
+            EU:[new Date('2024/10/03 11:00:00 UTC+2'),new Date('2024/10/14 11:00:01  UTC+2')],
+            },
+            expSum:[3000,5000,9000,18000,30000,32000,33000,35000,43000,53000],
+            price:{
+                CNY:[606,'¥'],
+                USD:[91.07,'$'],
+                EURO:[75.67,'€']
+            },
+            mode:Marathon
+        },
     }
     function urlParameter(){
         const queryString = window.location.search
