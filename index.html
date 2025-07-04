@@ -326,7 +326,7 @@
         timeCurrent = function(){
             let date =  new Date()
             // add offset for debug use
-            // date.setDate(date.getDate() - 32);
+            // date.setDate(date.getDate() +6);
             return date;
         }
         timeUpdate = function(){
@@ -684,17 +684,52 @@
         // },
         battlepass17:{
             title:'battlepass season XVII calculator',
-            thumbnail:'url("sg-wotp.wgcdn.co/dcont/fb/image/1022x360_thumbnail_cut.jpg")',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/1022x360_thumbnail_cut_v6.jpg")',
             timespan:{
             ASIA:[new Date('2025/06/03 07:30:00 UTC+8'),new Date('2025/09/03 05:30:00  UTC+8')],
             CN:[new Date('2025/06/05 08:30:00 UTC+8'),new Date('2025/09/04 01:59:00  UTC+8')],
-            US:[new Date('2025/06/03 06:30:00 UTC-8'),new Date('2025/09/04 07:30:00  UTC-8')],
+            US:[new Date('2025/06/03 06:30:00 UTC-7'),new Date('2025/09/04 07:30:00  UTC-7')],
             EU:[new Date('2025/06/04 09:00:00 UTC+2'),new Date('2025/09/04 00:30:00  UTC+2')],
             },
             totalPoint:7500,
             mode:Battlepass
+        },
+        battlepassTombRaider:{
+            title:'battlepass special tomb raider calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/1022x360-tr.jpg")',
+            timespan:{
+            ASIA:[new Date('2025/07/10 06:30:00 UTC+8'),new Date('2025/07/21 05:30:00  UTC+8')],
+            CN:[new Date('2025/07/10 03:30:00 UTC+8'),new Date('2025/07/21 02:30:00  UTC+8')],
+            US:[new Date('2025/07/10 03:30:00 UTC-7'),new Date('2025/07/21 14:30:00  UTC-7')],
+            EU:[new Date('2025/07/10 05:30:00 UTC+1'),new Date('2024/07/21 05:30:00  UTC+1')],
+            },
+            totalPoint:1500,
+            mode:Battlepass
+        },
+        battlepassDukeNukem:{
+            title:'battlepass special duke nukem calculator',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/1022x360-dn.jpg")',
+            timespan:{
+            ASIA:[new Date('2025/07/10 06:30:00 UTC+8'),new Date('2025/07/21 05:30:00  UTC+8')],
+            CN:[new Date('2025/07/10 03:30:00 UTC+8'),new Date('2025/07/21 02:30:00  UTC+8')],
+            US:[new Date('2025/07/10 03:30:00 UTC-7'),new Date('2025/07/21 14:30:00  UTC-7')],
+            EU:[new Date('2025/07/10 05:30:00 UTC+1'),new Date('2024/07/21 05:30:00  UTC+1')],
+            },
+            totalPoint:2000,
+            mode:Battlepass
+        },
+        battlepassBothTRandDN:{
+            title:'I WANT BOTH CALCULATOR',
+            thumbnail:'url("http://sg-wotp.wgcdn.co/dcont/fb/image/micro_patch_wot_1022x360.jpg")',
+            timespan:{
+            ASIA:[new Date('2025/07/10 06:30:00 UTC+8'),new Date('2025/07/21 05:30:00  UTC+8')],
+            CN:[new Date('2025/07/10 03:30:00 UTC+8'),new Date('2025/07/21 02:30:00  UTC+8')],
+            US:[new Date('2025/07/10 03:30:00 UTC-7'),new Date('2025/07/21 14:30:00  UTC-7')],
+            EU:[new Date('2025/07/10 05:30:00 UTC+1'),new Date('2024/07/21 05:30:00  UTC+1')],
+            },
+            totalPoint:3500,
+            mode:Battlepass
         }
-        
     }
     function urlParameter(){
         const queryString = window.location.search
